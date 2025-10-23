@@ -13,8 +13,55 @@ permissions:
   contents: write
 
 jobs:
-  auto-release:
-    runs-on: macos-latest
+  version:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.get_version.outputs.new }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get current version from latest git tag
+        id: get_version
+        run: |
+          # Get the latest tag, or default to 4.5.5 if no tags exist
+          LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "v4.5.5")
+          CURRENT_VERSION="${LATEST_TAG#v}"  # Remove 'v' prefix
+          echo "current=$CURRENT_VERSION" >> $GITHUB_OUTPUT
+
+          # Auto-increment patch version
+          IFS='.' read -ra VERSION_PARTS <<< "$CURRENT_VERSION"
+          MAJOR="${VERSION_PARTS[0]}"
+          MINOR="${VERSION_PARTS[1]}"
+          PATCH="${VERSION_PARTS[2]}"
+          NEW_PATCH=$((PATCH + 1))
+          NEW_VERSION="$MAJOR.$MINOR.$NEW_PATCH"
+
+          echo "new=$NEW_VERSION" >> $GITHUB_OUTPUT
+          echo "📦 Auto-incrementing version from latest tag: $CURRENT_VERSION → $NEW_VERSION"
+
+      - name: Create Git Tag
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          # Check if tag already exists
+          if git rev-parse v${{ steps.get_version.outputs.new }} >/dev/null 2>&1; then
+            echo "Tag v${{ steps.get_version.outputs.new }} already exists, skipping..."
+          else
+            git tag v${{ steps.get_version.outputs.new }}
+            git push origin v${{ steps.get_version.outputs.new }}
+            echo "✅ Created and pushed tag v${{ steps.get_version.outputs.new }}"
+          fi
+
+  build:
+    needs: version
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
 
     steps:
       - name: Checkout code
@@ -31,76 +78,87 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Get current version
-        id: get_version
-        run: |
-          CURRENT_VERSION=$(node -p "require('./package.json').version")
-          echo "current=$CURRENT_VERSION" >> $GITHUB_OUTPUT
-
-          # Auto-increment patch version
-          IFS='.' read -ra VERSION_PARTS <<< "$CURRENT_VERSION"
-          MAJOR="${VERSION_PARTS[0]}"
-          MINOR="${VERSION_PARTS[1]}"
-          PATCH="${VERSION_PARTS[2]}"
-          NEW_PATCH=$((PATCH + 1))
-          NEW_VERSION="$MAJOR.$MINOR.$NEW_PATCH"
-
-          echo "new=$NEW_VERSION" >> $GITHUB_OUTPUT
-          echo "📦 Auto-incrementing version: $CURRENT_VERSION → $NEW_VERSION"
-
       - name: Update version in package.json
         run: |
-          npm version ${{ steps.get_version.outputs.new }} --no-git-tag-version
+          npm version ${{ needs.version.outputs.version }} --no-git-tag-version
 
-      - name: Build app
-        run: npm run electron:build
+      - name: Build app (macOS)
+        if: matrix.os == 'macos-latest'
+        run: npm run package:mac
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build app (Linux)
+        if: matrix.os == 'ubuntu-latest'
+        run: npm run package
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build app (Windows)
+        if: matrix.os == 'windows-latest'
+        run: npm run electron:build -- --win
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Fix latest-mac.yml file names
+        if: matrix.os == 'macos-latest'
         run: |
           cd release
-          sed -i '' 's/Hauskat-Mission-Control/Hauskat.Mission.Control/g' latest-mac.yml
+          sed -i '' 's/Hauskat-Mission-Control/Hauskat.Mission.Control/g' latest-mac.yml || true
           echo "✅ Fixed latest-mac.yml"
-          cat latest-mac.yml
+          cat latest-mac.yml || echo "No latest-mac.yml found"
 
-      - name: Create Git Tag
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git tag v${{ steps.get_version.outputs.new }}
-          git push origin v${{ steps.get_version.outputs.new }}
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-${{ matrix.os }}
+          path: |
+            release/*
+          retention-days: 5
+
+  release:
+    needs: [version, build]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Display structure of downloaded files
+        run: ls -R artifacts
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: v${{ steps.get_version.outputs.new }}
-          name: v${{ steps.get_version.outputs.new }}
+          tag_name: v${{ needs.version.outputs.version }}
+          name: v${{ needs.version.outputs.version }}
           body: |
-            ## 🚀 Auto-Release v${{ steps.get_version.outputs.new }}
+            ## 🚀 Auto-Release v${{ needs.version.outputs.version }}
 
             Auto-generated release from commit ${{ github.sha }}
 
             ### Changes
             ${{ github.event.head_commit.message }}
 
+            ### Downloads
+            - **macOS**: Download the `.dmg` or `.zip` file
+            - **Linux**: Download the `.AppImage`, `.deb`, or `.rpm` file
+            - **Windows**: Download the `.exe` installer or portable `.exe`
+
             ---
             🤖 This release was automatically generated on push to main
           files: |
-            release/*.dmg
-            release/*.zip
-            release/latest-mac.yml
+            artifacts/**/*.dmg
+            artifacts/**/*.zip
+            artifacts/**/*.AppImage
+            artifacts/**/*.deb
+            artifacts/**/*.rpm
+            artifacts/**/*.snap
+            artifacts/**/*.exe
+            artifacts/**/*.yml
+            artifacts/**/*.yaml
           draft: false
           prerelease: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: release-builds
-          path: |
-            release/*.dmg
-            release/*.zip
-            release/*.yml
-          retention-days: 5

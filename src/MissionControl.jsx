@@ -18,127 +18,127 @@ const HauskatMissionControlV45 = () => {
   const getColorClasses = (color, type) => {
     const colorMap = {
       purple: {
-        bg50: 'bg-purple-50',
-        bg100: 'bg-purple-100',
-        bg200: 'bg-purple-200',
+        bg50: 'bg-purple-50 dark:bg-purple-900',
+        bg100: 'bg-purple-100 dark:bg-purple-800',
+        bg200: 'bg-purple-200 dark:bg-purple-700',
         bg500: 'bg-purple-500',
         bg600: 'bg-purple-600',
-        text600: 'text-purple-600',
-        text700: 'text-purple-700',
-        border100: 'border-purple-100',
-        border200: 'border-purple-200',
+        text600: 'text-purple-600 dark:text-purple-400',
+        text700: 'text-purple-700 dark:text-purple-300',
+        border100: 'border-purple-100 dark:border-purple-800',
+        border200: 'border-purple-200 dark:border-purple-700',
         dot: 'bg-purple-400',
       },
       cyan: {
-        bg50: 'bg-cyan-50',
-        bg100: 'bg-cyan-100',
-        bg200: 'bg-cyan-200',
+        bg50: 'bg-cyan-50 dark:bg-cyan-900',
+        bg100: 'bg-cyan-100 dark:bg-cyan-800',
+        bg200: 'bg-cyan-200 dark:bg-cyan-700',
         bg500: 'bg-cyan-500',
         bg600: 'bg-cyan-600',
-        text600: 'text-cyan-600',
-        text700: 'text-cyan-700',
-        border100: 'border-cyan-100',
-        border200: 'border-cyan-200',
+        text600: 'text-cyan-600 dark:text-cyan-400',
+        text700: 'text-cyan-700 dark:text-cyan-300',
+        border100: 'border-cyan-100 dark:border-cyan-800',
+        border200: 'border-cyan-200 dark:border-cyan-700',
         dot: 'bg-cyan-400',
       },
       green: {
-        bg50: 'bg-green-50',
-        bg100: 'bg-green-100',
-        bg200: 'bg-green-200',
+        bg50: 'bg-green-50 dark:bg-green-900',
+        bg100: 'bg-green-100 dark:bg-green-800',
+        bg200: 'bg-green-200 dark:bg-green-700',
         bg500: 'bg-green-500',
         bg600: 'bg-green-600',
-        text600: 'text-green-600',
-        text700: 'text-green-700',
-        border100: 'border-green-100',
-        border200: 'border-green-200',
+        text600: 'text-green-600 dark:text-green-400',
+        text700: 'text-green-700 dark:text-green-300',
+        border100: 'border-green-100 dark:border-green-800',
+        border200: 'border-green-200 dark:border-green-700',
         dot: 'bg-green-400',
       },
       orange: {
-        bg50: 'bg-orange-50',
-        bg100: 'bg-orange-100',
-        bg200: 'bg-orange-200',
+        bg50: 'bg-orange-50 dark:bg-orange-900',
+        bg100: 'bg-orange-100 dark:bg-orange-800',
+        bg200: 'bg-orange-200 dark:bg-orange-700',
         bg500: 'bg-orange-500',
         bg600: 'bg-orange-600',
-        text600: 'text-orange-600',
-        text700: 'text-orange-700',
-        border100: 'border-orange-100',
-        border200: 'border-orange-200',
+        text600: 'text-orange-600 dark:text-orange-400',
+        text700: 'text-orange-700 dark:text-orange-300',
+        border100: 'border-orange-100 dark:border-orange-800',
+        border200: 'border-orange-200 dark:border-orange-700',
         dot: 'bg-orange-400',
       },
       yellow: {
-        bg50: 'bg-yellow-50',
-        bg100: 'bg-yellow-100',
-        bg200: 'bg-yellow-200',
+        bg50: 'bg-yellow-50 dark:bg-yellow-900',
+        bg100: 'bg-yellow-100 dark:bg-yellow-800',
+        bg200: 'bg-yellow-200 dark:bg-yellow-700',
         bg500: 'bg-yellow-500',
         bg600: 'bg-yellow-600',
-        text600: 'text-yellow-600',
-        text700: 'text-yellow-700',
-        border100: 'border-yellow-100',
-        border200: 'border-yellow-200',
+        text600: 'text-yellow-600 dark:text-yellow-400',
+        text700: 'text-yellow-700 dark:text-yellow-300',
+        border100: 'border-yellow-100 dark:border-yellow-800',
+        border200: 'border-yellow-200 dark:border-yellow-700',
         dot: 'bg-yellow-400',
       },
       blue: {
-        bg50: 'bg-blue-50',
-        bg100: 'bg-blue-100',
-        bg200: 'bg-blue-200',
+        bg50: 'bg-blue-50 dark:bg-blue-900',
+        bg100: 'bg-blue-100 dark:bg-blue-800',
+        bg200: 'bg-blue-200 dark:bg-blue-700',
         bg500: 'bg-blue-500',
         bg600: 'bg-blue-600',
-        text600: 'text-blue-600',
-        text700: 'text-blue-700',
-        border100: 'border-blue-100',
-        border200: 'border-blue-200',
+        text600: 'text-blue-600 dark:text-blue-400',
+        text700: 'text-blue-700 dark:text-blue-300',
+        border100: 'border-blue-100 dark:border-blue-800',
+        border200: 'border-blue-200 dark:border-blue-700',
         dot: 'bg-blue-400',
       },
       indigo: {
-        bg50: 'bg-indigo-50',
-        bg100: 'bg-indigo-100',
-        bg200: 'bg-indigo-200',
+        bg50: 'bg-indigo-50 dark:bg-indigo-900',
+        bg100: 'bg-indigo-100 dark:bg-indigo-800',
+        bg200: 'bg-indigo-200 dark:bg-indigo-700',
         bg500: 'bg-indigo-500',
         bg600: 'bg-indigo-600',
-        text600: 'text-indigo-600',
-        text700: 'text-indigo-700',
-        border100: 'border-indigo-100',
-        border200: 'border-indigo-200',
+        text600: 'text-indigo-600 dark:text-indigo-400',
+        text700: 'text-indigo-700 dark:text-indigo-300',
+        border100: 'border-indigo-100 dark:border-indigo-800',
+        border200: 'border-indigo-200 dark:border-indigo-700',
         dot: 'bg-indigo-400',
       },
       pink: {
-        bg50: 'bg-pink-50',
-        bg100: 'bg-pink-100',
-        bg200: 'bg-pink-200',
+        bg50: 'bg-pink-50 dark:bg-pink-900',
+        bg100: 'bg-pink-100 dark:bg-pink-800',
+        bg200: 'bg-pink-200 dark:bg-pink-700',
         bg500: 'bg-pink-500',
         bg600: 'bg-pink-600',
-        text600: 'text-pink-600',
-        text700: 'text-pink-700',
-        border100: 'border-pink-100',
-        border200: 'border-pink-200',
+        text600: 'text-pink-600 dark:text-pink-400',
+        text700: 'text-pink-700 dark:text-pink-300',
+        border100: 'border-pink-100 dark:border-pink-800',
+        border200: 'border-pink-200 dark:border-pink-700',
         dot: 'bg-pink-400',
       },
       red: {
-        bg50: 'bg-red-50',
-        bg100: 'bg-red-100',
-        bg200: 'bg-red-200',
+        bg50: 'bg-red-50 dark:bg-red-900',
+        bg100: 'bg-red-100 dark:bg-red-800',
+        bg200: 'bg-red-200 dark:bg-red-700',
         bg500: 'bg-red-500',
         bg600: 'bg-red-600',
-        text600: 'text-red-600',
-        text700: 'text-red-700',
-        border100: 'border-red-100',
-        border200: 'border-red-200',
+        text600: 'text-red-600 dark:text-red-400',
+        text700: 'text-red-700 dark:text-red-300',
+        border100: 'border-red-100 dark:border-red-800',
+        border200: 'border-red-200 dark:border-red-700',
         dot: 'bg-red-400',
       },
       gray: {
-        bg50: 'bg-gray-50',
-        bg100: 'bg-gray-100',
-        bg200: 'bg-gray-200',
+        bg50: 'bg-gray-50 dark:bg-gray-900',
+        bg100: 'bg-gray-100 dark:bg-gray-800',
+        bg200: 'bg-gray-200 dark:bg-gray-700',
         bg500: 'bg-gray-500',
         bg600: 'bg-gray-600',
-        text600: 'text-gray-600',
-        text700: 'text-gray-700',
-        border100: 'border-gray-100',
-        border200: 'border-gray-200',
+        text600: 'text-gray-600 dark:text-gray-400',
+        text700: 'text-gray-700 dark:text-gray-300',
+        border100: 'border-gray-100 dark:border-gray-800',
+        border200: 'border-gray-200 dark:border-gray-700',
         dot: 'bg-gray-400',
       },
     };
-    return colorMap[color]?.[type] || 'bg-gray-500';
+    return colorMap[color]?.[type] || 'bg-gray-500 dark:bg-gray-500';
   };
 
   // Load state from localStorage on mount
@@ -667,7 +667,7 @@ const HauskatMissionControlV45 = () => {
                   <span className="text-sm font-medium">{layer.layer}</span>
                   <span className="text-sm text-gray-500">{layer.status}%</span>
                 </div>
-                <div className="w-full bg-gray-200 rounded-full h-3">
+                <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3">
                   <div
                     className={`${getColorClasses(layer.color, 'bg500')} h-3 rounded-full transition-all`}
                     style={{ width: `${layer.status}%` }}
@@ -912,7 +912,7 @@ const HauskatMissionControlV45 = () => {
             <span className="text-sm text-gray-500">0% Complete</span>
           </div>
           <div className="relative">
-            <div className="w-full bg-gray-200 rounded-full h-4">
+            <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-4">
               <div className="bg-gradient-to-r from-blue-500 to-green-500 h-4 rounded-full" style={{width: '0%'}} />
             </div>
             <div className="mt-2 flex justify-between text-xs text-gray-500">
@@ -1437,12 +1437,12 @@ const HauskatMissionControlV45 = () => {
                             ✅ Recommended: {item.recommended}
                           </div>
                         </div>
-                        <button 
+                        <button
                           onClick={() => toggleComplete(`decision-${cidx}-${iidx}`)}
                           className={`ml-4 px-4 py-2 rounded-lg font-semibold text-sm transition ${
                             completedItems.has(`decision-${cidx}-${iidx}`)
-                              ? 'bg-green-100 text-green-700'
-                              : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                              ? 'bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300'
+                              : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
                           }`}
                         >
                           {completedItems.has(`decision-${cidx}-${iidx}`) ? 'Decided ✓' : 'Mark Decided'}
@@ -1661,8 +1661,8 @@ const DevSprintsSection = () => {
                 onClick={() => setActiveSprintFilter(sprint.status)}
                 className={`px-3 py-1 rounded-lg text-sm font-medium transition ${
                   activeSprintFilter === sprint.status
-                    ? 'bg-green-100 text-green-700 border-2 border-green-500'
-                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                    ? 'bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 border-2 border-green-500 dark:border-green-700'
+                    : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600'
                 }`}
                 aria-label={`View ${sprint.name}`}
                 aria-pressed={activeSprintFilter === sprint.status}
