@@ -3531,20 +3531,20 @@ const DecisionLogSection = () => {
             <h5 className="font-semibold mb-3 dark:text-gray-200">Natural Language Processing</h5>
             <ul className="space-y-2 text-sm">
               <li>â€¢ <span className="dark:text-gray-300">Semantic</span> search (OpenAI embeddings)</li>
-              <li>â€¢ <span className="dark:text-gray-300">Auto-tagging & categorization</li>
-              <li>â€¢ <span className="dark:text-gray-300">Duplicate detection</li>
-              <li>â€¢ <span className="dark:text-gray-300">Content moderation</li>
-              <li>â€¢ <span className="dark:text-gray-300">Sentiment analysis</li>
+              <li>â€¢ <span className="dark:text-gray-300">Auto-tagging & categorization</span></li>
+              <li>â€¢ <span className="dark:text-gray-300">Duplicate detection</span></li>
+              <li>â€¢ <span className="dark:text-gray-300">Content moderation</span></li>
+              <li>â€¢ <span className="dark:text-gray-300">Sentiment analysis</span></li>
             </ul>
           </div>
           <div>
             <h5 className="font-semibold mb-3 dark:text-gray-200">Predictive Analytics</h5>
             <ul className="space-y-2 text-sm">
-              <li>â€¢ <span className="dark:text-gray-300">Health risk prediction</li>
-              <li>â€¢ <span className="dark:text-gray-300">Behavior pattern analysis</li>
-              <li>â€¢ <span className="dark:text-gray-300">Enrichment recommendations</li>
-              <li>â€¢ <span className="dark:text-gray-300">User churn prediction</li>
-              <li>â€¢ <span className="dark:text-gray-300">Content quality scoring</li>
+              <li>â€¢ <span className="dark:text-gray-300">Health risk prediction</span></li>
+              <li>â€¢ <span className="dark:text-gray-300">Behavior pattern analysis</span></li>
+              <li>â€¢ <span className="dark:text-gray-300">Enrichment recommendations</span></li>
+              <li>â€¢ <span className="dark:text-gray-300">User churn prediction</span></li>
+              <li>â€¢ <span className="dark:text-gray-300">Content quality scoring</span></li>
             </ul>
           </div>
         </div>
