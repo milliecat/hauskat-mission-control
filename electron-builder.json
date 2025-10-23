@@ -1,6 +1,7 @@
 {
   "appId": "com.hauskat.missioncontrol",
   "productName": "Hauskat Mission Control",
+  "artifactName": "${productName}-${version}-${arch}.${ext}",
   "directories": {
     "output": "release",
     "buildResources": "public"
