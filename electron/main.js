@@ -1,8 +1,10 @@
-import { app, BrowserWindow, Menu, dialog } from 'electron';
+import { app, BrowserWindow, Menu, dialog, ipcMain } from 'electron';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
+import { homedir } from 'os';
 import Store from 'electron-store';
 import { autoUpdater } from 'electron-updater';
+import { ProjectMonitor } from './projectMonitor.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -21,6 +23,7 @@ app.commandLine.appendSwitch('disable-gpu-sandbox');
 const store = new Store();
 
 let mainWindow;
+let projectMonitor;
 
 // Configure auto-updater with verbose logging
 autoUpdater.autoDownload = false;
@@ -255,11 +258,72 @@ function createWindow() {
 
   mainWindow.on('closed', () => {
     mainWindow = null;
+    if (projectMonitor) {
+      projectMonitor.stop();
+    }
   });
 }
 
+// Set up project monitoring
+function setupProjectMonitor() {
+  const hauskatPath = store.get('hauskatProjectPath', join(homedir(), 'Projects', 'hauskat'));
+
+  console.log('Setting up project monitor for:', hauskatPath);
+
+  projectMonitor = new ProjectMonitor(
+    hauskatPath,
+    (data) => {
+      // Send project updates to renderer
+      if (mainWindow && !mainWindow.isDestroyed()) {
+        mainWindow.webContents.send('project-update', data);
+      }
+    },
+    (matches) => {
+      // Send task matches to renderer for auto-completion
+      if (mainWindow && !mainWindow.isDestroyed()) {
+        console.log('Sending task matches to renderer:', matches);
+        mainWindow.webContents.send('task-matches', matches);
+      }
+    }
+  );
+
+  projectMonitor.start();
+}
+
+// IPC handlers
+ipcMain.handle('get-project-path', () => {
+  return store.get('hauskatProjectPath', join(homedir(), 'Projects', 'hauskat'));
+});
+
+ipcMain.handle('set-project-path', async (event, path) => {
+  store.set('hauskatProjectPath', path);
+
+  // Restart monitor with new path
+  if (projectMonitor) {
+    projectMonitor.stop();
+  }
+  setupProjectMonitor();
+
+  return true;
+});
+
+ipcMain.handle('refresh-project-data', async () => {
+  if (projectMonitor) {
+    await projectMonitor.fetchProjectData();
+  }
+});
+
+ipcMain.handle('update-tasks', async (event, tasks) => {
+  if (projectMonitor) {
+    projectMonitor.setTasks(tasks);
+  }
+});
+
 app.whenReady().then(() => {
   createWindow();
+
+  // Set up project monitoring
+  setupProjectMonitor();
 
   // Check for updates after app is ready (only in production)
   if (app.isPackaged) {
@@ -282,6 +346,9 @@ app.whenReady().then(() => {
 });
 
 app.on('window-all-closed', () => {
+  if (projectMonitor) {
+    projectMonitor.stop();
+  }
   if (process.platform !== 'darwin') {
     app.quit();
   }
