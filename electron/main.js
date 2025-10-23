@@ -1,4 +1,4 @@
-import { app, BrowserWindow, Menu, dialog } from 'electron';
+import { app, BrowserWindow, Menu, dialog, ipcMain } from 'electron';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import Store from 'electron-store';
@@ -6,6 +6,15 @@ import { autoUpdater } from 'electron-updater';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+
+const isDevelopment = process.env.NODE_ENV === 'development' || !app.isPackaged;
+
+// Logger helper for development
+const log = {
+  info: (...args) => isDevelopment && console.log('[INFO]', ...args),
+  error: (...args) => console.error('[ERROR]', ...args),
+  warn: (...args) => isDevelopment && console.warn('[WARN]', ...args),
+};
 
 // Initialize electron-store for persistent data
 const store = new Store();
@@ -18,11 +27,11 @@ autoUpdater.autoInstallOnAppQuit = true;
 
 // Auto-updater event listeners
 autoUpdater.on('checking-for-update', () => {
-  console.log('Checking for updates...');
+  log.info('Checking for updates...');
 });
 
 autoUpdater.on('update-available', (info) => {
-  console.log('Update available:', info.version);
+  log.info('Update available:', info.version);
   dialog.showMessageBox(mainWindow, {
     type: 'info',
     title: 'Update Available',
@@ -44,20 +53,20 @@ autoUpdater.on('update-available', (info) => {
 });
 
 autoUpdater.on('update-not-available', () => {
-  console.log('No updates available');
+  log.info('No updates available');
 });
 
 autoUpdater.on('error', (err) => {
-  console.error('Error in auto-updater:', err);
+  log.error('Error in auto-updater:', err);
 });
 
 autoUpdater.on('download-progress', (progressObj) => {
-  let message = `Download speed: ${progressObj.bytesPerSecond} - Downloaded ${progressObj.percent}%`;
-  console.log(message);
+  const message = `Download speed: ${progressObj.bytesPerSecond} - Downloaded ${progressObj.percent}%`;
+  log.info(message);
 });
 
 autoUpdater.on('update-downloaded', (info) => {
-  console.log('Update downloaded:', info.version);
+  log.info('Update downloaded:', info.version);
   dialog.showMessageBox(mainWindow, {
     type: 'info',
     title: 'Update Ready',
@@ -81,14 +90,15 @@ function createWindow() {
     backgroundColor: '#1a1a2e',
     webPreferences: {
       preload: join(__dirname, 'preload.js'),
-      nodeIntegration: true,
-      contextIsolation: false,
+      nodeIntegration: false,
+      contextIsolation: true,
+      sandbox: true,
     },
     icon: join(__dirname, '../public/icon.svg'),
   });
 
   // Load the app
-  if (process.env.NODE_ENV === 'development' || !app.isPackaged) {
+  if (isDevelopment) {
     mainWindow.loadURL('http://localhost:5173');
     mainWindow.webContents.openDevTools();
   } else {

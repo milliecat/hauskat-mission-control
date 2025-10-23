@@ -1,8 +1,13 @@
 import React from 'react';
 import MissionControl from './MissionControl';
+import ErrorBoundary from './components/ErrorBoundary';
 
 function App() {
-  return <MissionControl />;
+  return (
+    <ErrorBoundary>
+      <MissionControl />
+    </ErrorBoundary>
+  );
 }
 
 export default App;
