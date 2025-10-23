@@ -13,6 +13,9 @@ app.commandLine.appendSwitch('enable-zero-copy');
 app.commandLine.appendSwitch('ignore-gpu-blocklist');
 app.commandLine.appendSwitch('enable-webgl');
 app.commandLine.appendSwitch('enable-accelerated-2d-canvas');
+app.commandLine.appendSwitch('enable-features', 'VaapiVideoDecoder');
+app.commandLine.appendSwitch('use-gl', 'desktop');
+app.commandLine.appendSwitch('disable-gpu-sandbox');
 
 // Initialize electron-store for persistent data
 const store = new Store();
