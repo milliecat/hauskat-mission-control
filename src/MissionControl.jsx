@@ -2271,7 +2271,7 @@ const DecisionLogSection = () => {
 
       {/* Core Features Grid */}
       <div className="bg-white rounded-xl p-6">
-        <h3 className="text-2xl font-bold mb-4">ðŸ  Core Hauskat Features</h3>
+        <h3 className="text-2xl font-bold mb-4">🏠 Core Hauskat Features</h3>
         
         <div className="space-y-6">
           {/* Profile & Wellness */}
@@ -2279,11 +2279,11 @@ const DecisionLogSection = () => {
             <h4 className="font-semibold text-lg mb-3 text-purple-600">Profile & Wellness</h4>
             <div className="grid grid-cols-3 gap-3">
               {[
-                { icon: 'ðŸ±', name: 'Loafi Profiles', desc: 'Customizable cat profiles with CSS' },
-                { icon: 'ðŸ“Š', name: 'Wellness Tracking', desc: 'Mood, energy, health metrics' },
-                { icon: 'ðŸŽ®', name: 'Enrichment Hub', desc: "Nova's Lab tested activities" },
-                { icon: 'ðŸ“ˆ', name: 'Analytics', desc: 'Insights & comparisons' },
-                { icon: 'ðŸ¥', name: 'Health Records', desc: 'Vet visits, medications' },
+                { icon: '🐱', name: 'Loafi Profiles', desc: 'Customizable cat profiles with CSS' },
+                { icon: '📊', name: 'Wellness Tracking', desc: 'Mood, energy, health metrics' },
+                { icon: '🎮', name: 'Enrichment Hub', desc: "Nova's Lab tested activities" },
+                { icon: '📈', name: 'Analytics', desc: 'Insights & comparisons' },
+                { icon: '🏥', name: 'Health Records', desc: 'Vet visits, medications' },
                 { icon: 'â°', name: 'Care Reminders', desc: 'Meds, appointments, tasks' }
               ].map(feature => (
                 <div key={feature.name} className="border rounded-lg p-3 hover:bg-purple-50 transition">
@@ -2304,12 +2304,12 @@ const DecisionLogSection = () => {
             <h4 className="font-semibold text-lg mb-3 text-blue-600">Community & Knowledge</h4>
             <div className="grid grid-cols-3 gap-3">
               {[
-                { icon: 'ðŸ§ ', name: 'Knowledge Hub', desc: 'AI-powered Q&A system' },
-                { icon: 'ðŸ‘¥', name: 'Local Groups', desc: 'Neighborhood cat parents' },
-                { icon: 'ðŸ’¬', name: 'IM System', desc: 'Direct messaging' },
-                { icon: 'ðŸŽ¨', name: 'Creator Tools', desc: 'Monetization for experts' },
-                { icon: 'ðŸ†', name: 'Challenges', desc: 'Community competitions' },
-                { icon: 'ðŸ“š', name: 'Wiki System', desc: 'Evolving knowledge base' }
+                { icon: '🧠', name: 'Knowledge Hub', desc: 'AI-powered Q&A system' },
+                { icon: '👥', name: 'Local Groups', desc: 'Neighborhood cat parents' },
+                { icon: '💬', name: 'IM System', desc: 'Direct messaging' },
+                { icon: '🎨', name: 'Creator Tools', desc: 'Monetization for experts' },
+                { icon: '🏆', name: 'Challenges', desc: 'Community competitions' },
+                { icon: '📚', name: 'Wiki System', desc: 'Evolving knowledge base' }
               ].map(feature => (
                 <div key={feature.name} className="border rounded-lg p-3 hover:bg-blue-50 transition">
                   <div className="flex items-start gap-3">
@@ -2329,12 +2329,12 @@ const DecisionLogSection = () => {
             <h4 className="font-semibold text-lg mb-3 text-green-600">Power Integrations</h4>
             <div className="grid grid-cols-3 gap-3">
               {[
-                { icon: 'ðŸ¥', name: 'Vet EMR', desc: 'Direct record access' },
+                { icon: '🏥', name: 'Vet EMR', desc: 'Direct record access' },
                 { icon: 'âœˆï¸', name: 'Travel Docs', desc: 'Digital health passport' },
-                { icon: 'ðŸ›¡ï¸', name: 'Pet Insurance', desc: 'Premium discounts' },
-                { icon: 'ðŸ“±', name: 'Wearables', desc: 'Activity trackers' },
-                { icon: 'ðŸš¨', name: 'Emergency', desc: 'Quick vet access' },
-                { icon: 'ðŸ”¬', name: 'Research', desc: 'Citizen science' }
+                { icon: '🛡️', name: 'Pet Insurance', desc: 'Premium discounts' },
+                { icon: '📱', name: 'Wearables', desc: 'Activity trackers' },
+                { icon: '🚨', name: 'Emergency', desc: 'Quick vet access' },
+                { icon: '🔬', name: 'Research', desc: 'Citizen science' }
               ].map(feature => (
                 <div key={feature.name} className="border rounded-lg p-3 hover:bg-green-50 transition">
                   <div className="flex items-start gap-3">
@@ -2353,7 +2353,7 @@ const DecisionLogSection = () => {
 
       {/* MVP vs Vision */}
       <div className="bg-white rounded-xl p-6">
-        <h3 className="text-2xl font-bold mb-4">ðŸš€ MVP â†’ Vision Path</h3>
+        <h3 className="text-2xl font-bold mb-4">🚀 MVP â†’ Vision Path</h3>
         <div className="grid grid-cols-2 gap-6">
           <div className="bg-blue-50 rounded-lg p-4">
             <h4 className="font-bold text-blue-700 mb-3">Phase 1: MVP (Q1 2026)</h4>
@@ -2418,7 +2418,7 @@ const DecisionLogSection = () => {
 
       {/* Pet Passport Opportunity */}
       <div className="bg-white rounded-xl p-6">
-        <h3 className="text-2xl font-bold mb-4">ðŸ¥ Digital Pet Passport Opportunity</h3>
+        <h3 className="text-2xl font-bold mb-4">🏥 Digital Pet Passport Opportunity</h3>
         <div className="bg-gradient-to-r from-blue-50 to-green-50 p-6 rounded-lg mb-4">
           <div className="grid grid-cols-3 gap-4 text-center">
             <div>
@@ -2470,7 +2470,7 @@ const DecisionLogSection = () => {
 
       {/* Citizen Science Platform */}
       <div className="bg-white rounded-xl p-6">
-        <h3 className="text-2xl font-bold mb-4">ðŸ”¬ World's Largest Cat Research Platform</h3>
+        <h3 className="text-2xl font-bold mb-4">🔬 World's Largest Cat Research Platform</h3>
         
         <div className="bg-purple-50 rounded-lg p-4 mb-4">
           <p className="text-lg font-medium text-purple-900">
@@ -2483,12 +2483,12 @@ const DecisionLogSection = () => {
             <h4 className="font-semibold mb-3">Data Collection (Daily)</h4>
             <div className="space-y-2">
               {[
-                'ðŸ˜¸ Mood & energy levels',
-                'ðŸŽ® Enrichment activities',
-                'ðŸ½ï¸ Feeding patterns',
-                'ðŸ’¤ Sleep tracking',
-                'ðŸ—£ï¸ Vocalizations',
-                'ðŸ  Environmental factors'
+                '😸 Mood & energy levels',
+                '🎮 Enrichment activities',
+                '🍽️ Feeding patterns',
+                '💤 Sleep tracking',
+                '🗣️ Vocalizations',
+                '🏠 Environmental factors'
               ].map(item => (
                 <div key={item} className="flex items-center gap-2 text-sm">
                   <div className="w-2 h-2 bg-purple-400 rounded-full" />
@@ -2501,12 +2501,12 @@ const DecisionLogSection = () => {
             <h4 className="font-semibold mb-3">Research Applications</h4>
             <div className="space-y-2">
               {[
-                'ðŸŽ¯ Best enrichment for anxiety',
-                'ðŸ§¬ Breed-specific patterns',
-                'ðŸ‘´ Senior cat quality of life',
-                'ðŸš¨ Early health warnings',
-                'ðŸ˜Š Contentment factors',
-                'ðŸŒ Cultural care differences'
+                '🎯 Best enrichment for anxiety',
+                '🧬 Breed-specific patterns',
+                '👴 Senior cat quality of life',
+                '🚨 Early health warnings',
+                '😊 Contentment factors',
+                '🌍 Cultural care differences'
               ].map(item => (
                 <div key={item} className="flex items-center gap-2 text-sm">
                   <div className="w-2 h-2 bg-orange-400 rounded-full" />
@@ -2542,7 +2542,7 @@ const DecisionLogSection = () => {
 
       {/* Compliance Framework */}
       <div className="bg-white rounded-xl p-6">
-        <h3 className="text-2xl font-bold mb-4">ðŸ›¡ï¸ Legal & Compliance Strategy</h3>
+        <h3 className="text-2xl font-bold mb-4">🛡️ Legal & Compliance Strategy</h3>
         <div className="grid grid-cols-3 gap-4">
           <div className="border-2 border-gray-200 rounded-lg p-4">
             <Lock className="w-8 h-8 text-gray-600 mb-2" />
@@ -2587,7 +2587,7 @@ const DecisionLogSection = () => {
 
       {/* Knowledge Hub Architecture */}
       <div className="bg-white rounded-xl p-6">
-        <h3 className="text-2xl font-bold mb-4">ðŸ§  AI-Powered Knowledge Hub</h3>
+        <h3 className="text-2xl font-bold mb-4">🧠 AI-Powered Knowledge Hub</h3>
         <div className="grid grid-cols-2 gap-6">
           <div>
             <h4 className="font-semibold mb-3">Smart Features</h4>
@@ -2614,28 +2614,28 @@ const DecisionLogSection = () => {
             <h4 className="font-semibold mb-3">Content Evolution</h4>
             <div className="space-y-3">
               <div className="flex items-start gap-3">
-                <div className="text-2xl">ðŸ“</div>
+                <div className="text-2xl">📝</div>
                 <div>
                   <div className="font-medium">Living Documents</div>
                   <div className="text-sm text-gray-600">Posts evolve into wiki articles</div>
                 </div>
               </div>
               <div className="flex items-start gap-3">
-                <div className="text-2xl">ðŸŽ“</div>
+                <div className="text-2xl">🎓</div>
                 <div>
                   <div className="font-medium">Expert Claims</div>
                   <div className="text-sm text-gray-600">Experts can own topic areas</div>
                 </div>
               </div>
               <div className="flex items-start gap-3">
-                <div className="text-2xl">ðŸ”„</div>
+                <div className="text-2xl">🔄</div>
                 <div>
                   <div className="font-medium">Version History</div>
                   <div className="text-sm text-gray-600">See how advice changes over time</div>
                 </div>
               </div>
               <div className="flex items-start gap-3">
-                <div className="text-2xl">ðŸ“…</div>
+                <div className="text-2xl">📝…</div>
                 <div>
                   <div className="font-medium">Seasonal Updates</div>
                   <div className="text-sm text-gray-600">Content refreshes automatically</div>
@@ -2648,35 +2648,35 @@ const DecisionLogSection = () => {
 
       {/* Viral Mechanics */}
       <div className="bg-white rounded-xl p-6">
-        <h3 className="text-2xl font-bold mb-4">ðŸš€ Viral Growth Features</h3>
+        <h3 className="text-2xl font-bold mb-4">🚀 Viral Growth Features</h3>
         <div className="grid grid-cols-3 gap-4">
           <div className="border-2 border-pink-200 rounded-lg p-4 bg-pink-50">
-            <div className="text-2xl mb-2">ðŸ“Š</div>
+            <div className="text-2xl mb-2">📊</div>
             <h5 className="font-semibold">Cat Year in Review</h5>
             <p className="text-sm text-gray-600 mt-1">Spotify Wrapped style annual recap</p>
           </div>
           <div className="border-2 border-purple-200 rounded-lg p-4 bg-purple-50">
-            <div className="text-2xl mb-2">ðŸŽ®</div>
+            <div className="text-2xl mb-2">🎮</div>
             <h5 className="font-semibold">Enrichment Challenges</h5>
             <p className="text-sm text-gray-600 mt-1">TikTok-style viral challenges</p>
           </div>
           <div className="border-2 border-blue-200 rounded-lg p-4 bg-blue-50">
-            <div className="text-2xl mb-2">ðŸ†</div>
+            <div className="text-2xl mb-2">🏆</div>
             <h5 className="font-semibold">Cat Personality Quiz</h5>
             <p className="text-sm text-gray-600 mt-1">Shareable personality types</p>
           </div>
           <div className="border-2 border-green-200 rounded-lg p-4 bg-green-50">
-            <div className="text-2xl mb-2">ðŸ“¸</div>
+            <div className="text-2xl mb-2">📝¸</div>
             <h5 className="font-semibold">Daily Photo Prompts</h5>
             <p className="text-sm text-gray-600 mt-1">BeReal for cats</p>
           </div>
           <div className="border-2 border-yellow-200 rounded-lg p-4 bg-yellow-50">
-            <div className="text-2xl mb-2">ðŸŽ¯</div>
+            <div className="text-2xl mb-2">🎯</div>
             <h5 className="font-semibold">Referral Rewards</h5>
             <p className="text-sm text-gray-600 mt-1">Unlock features by inviting</p>
           </div>
           <div className="border-2 border-orange-200 rounded-lg p-4 bg-orange-50">
-            <div className="text-2xl mb-2">ðŸ”—</div>
+            <div className="text-2xl mb-2">🔗</div>
             <h5 className="font-semibold">Embeddable Widgets</h5>
             <p className="text-sm text-gray-600 mt-1">Cat stats on any website</p>
           </div>
@@ -2685,7 +2685,7 @@ const DecisionLogSection = () => {
 
       {/* SEO Strategy */}
       <div className="bg-white rounded-xl p-6">
-        <h3 className="text-2xl font-bold mb-4">ðŸ” SEO Domination Strategy</h3>
+        <h3 className="text-2xl font-bold mb-4">🔍 SEO Domination Strategy</h3>
         <div className="grid grid-cols-2 gap-6">
           <div>
             <h4 className="font-semibold mb-3">User-Generated SEO</h4>
@@ -2737,7 +2737,7 @@ const DecisionLogSection = () => {
 
       {/* Revenue Streams */}
       <div className="bg-white rounded-xl p-6">
-        <h3 className="text-2xl font-bold mb-4">ðŸ’° Diversified Revenue Streams</h3>
+        <h3 className="text-2xl font-bold mb-4">💰 Diversified Revenue Streams</h3>
         <div className="grid grid-cols-2 gap-4">
           <div className="bg-gradient-to-r from-purple-50 to-pink-50 p-4 rounded-lg">
             <h4 className="font-semibold text-purple-700 mb-3">Consumer Revenue</h4>
@@ -2812,7 +2812,7 @@ const DecisionLogSection = () => {
 
       {/* Partnership Strategy */}
       <div className="bg-white rounded-xl p-6">
-        <h3 className="text-2xl font-bold mb-4">ðŸ¤ Strategic Partnerships</h3>
+        <h3 className="text-2xl font-bold mb-4">🤝 Strategic Partnerships</h3>
         <div className="grid grid-cols-3 gap-4">
           {[
             { 
@@ -2857,7 +2857,7 @@ const DecisionLogSection = () => {
 
       {/* Growth Metrics */}
       <div className="bg-white rounded-xl p-6">
-        <h3 className="text-2xl font-bold mb-4">ðŸ“ˆ Growth & Success Metrics</h3>
+        <h3 className="text-2xl font-bold mb-4">📈 Growth & Success Metrics</h3>
         <div className="grid grid-cols-4 gap-4">
           <div className="text-center p-4 bg-purple-50 rounded-lg">
             <div className="text-2xl font-bold text-purple-600">100K</div>
@@ -2888,7 +2888,7 @@ const DecisionLogSection = () => {
 
       {/* Tech Stack */}
       <div className="bg-white rounded-xl p-6">
-        <h3 className="text-2xl font-bold mb-4">ðŸ› ï¸ Modern Tech Stack</h3>
+        <h3 className="text-2xl font-bold mb-4">🛠️ Modern Tech Stack</h3>
         <div className="grid grid-cols-3 gap-4">
           <div className="border-2 border-indigo-200 rounded-lg p-4">
             <h5 className="font-semibold text-indigo-700 mb-3">Frontend</h5>
@@ -2958,7 +2958,7 @@ const DecisionLogSection = () => {
 
       {/* AI/ML Architecture */}
       <div className="bg-white rounded-xl p-6">
-        <h3 className="text-2xl font-bold mb-4">ðŸ§  AI & ML Systems</h3>
+        <h3 className="text-2xl font-bold mb-4">🧠 AI & ML Systems</h3>
         <div className="grid grid-cols-2 gap-6">
           <div>
             <h5 className="font-semibold mb-3">Natural Language Processing</h5>
@@ -2985,7 +2985,7 @@ const DecisionLogSection = () => {
 
       {/* Integration Architecture */}
       <div className="bg-white rounded-xl p-6">
-        <h3 className="text-2xl font-bold mb-4">ðŸ”— Integration Architecture</h3>
+        <h3 className="text-2xl font-bold mb-4">🔗 Integration Architecture</h3>
         <div className="space-y-4">
           <div className="border-l-4 border-blue-500 pl-4">
             <h5 className="font-semibold">Veterinary EMR Integration</h5>
@@ -3024,7 +3024,7 @@ const DecisionLogSection = () => {
 
       {/* Timeline */}
       <div className="bg-white rounded-xl p-6">
-        <h3 className="text-2xl font-bold mb-6">ðŸ—“ï¸ Launch Timeline</h3>
+        <h3 className="text-2xl font-bold mb-6">🗓️ Launch Timeline</h3>
         <div className="space-y-6">
           {[
             {
@@ -3094,7 +3094,7 @@ const DecisionLogSection = () => {
 
       {/* Go-to-Market Strategy */}
       <div className="bg-white rounded-xl p-6">
-        <h3 className="text-2xl font-bold mb-4">ðŸš€ Go-to-Market Strategy</h3>
+        <h3 className="text-2xl font-bold mb-4">🚀 Go-to-Market Strategy</h3>
         <div className="grid grid-cols-2 gap-6">
           <div>
             <h4 className="font-semibold mb-3">Launch Channels</h4>
@@ -3135,7 +3135,7 @@ const DecisionLogSection = () => {
 
       {/* Success Milestones */}
       <div className="bg-white rounded-xl p-6">
-        <h3 className="text-2xl font-bold mb-4">ðŸ† Success Milestones</h3>
+        <h3 className="text-2xl font-bold mb-4">🏆 Success Milestones</h3>
         <div className="grid grid-cols-3 gap-4">
           {[
             { metric: 'Users', y1: '100K', y3: '1M', y5: '10M' },
