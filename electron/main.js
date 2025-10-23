@@ -7,6 +7,13 @@ import { autoUpdater } from 'electron-updater';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
+// Enable hardware acceleration and WebGL on Linux
+app.commandLine.appendSwitch('enable-gpu-rasterization');
+app.commandLine.appendSwitch('enable-zero-copy');
+app.commandLine.appendSwitch('ignore-gpu-blocklist');
+app.commandLine.appendSwitch('enable-webgl');
+app.commandLine.appendSwitch('enable-accelerated-2d-canvas');
+
 // Initialize electron-store for persistent data
 const store = new Store();
 
@@ -125,6 +132,8 @@ function createWindow() {
       preload: join(__dirname, 'preload.js'),
       nodeIntegration: true,
       contextIsolation: false,
+      webgl: true,
+      acceleratedGraphics: true,
     },
     icon: join(__dirname, '../public/icon.svg'),
   });
