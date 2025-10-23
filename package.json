@@ -13,11 +13,17 @@
     "package": "vite build && electron-builder --mac",
     "icon:help": "node generate-icon.cjs"
   },
-  "keywords": ["electron", "react", "hauskat", "mission-control"],
+  "keywords": [
+    "electron",
+    "react",
+    "hauskat",
+    "mission-control"
+  ],
   "author": "Hauskat",
   "license": "MIT",
   "dependencies": {
     "electron-store": "^8.1.0",
+    "electron-updater": "^6.6.2",
     "lucide-react": "^0.309.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
@@ -41,7 +47,10 @@
     "mac": {
       "category": "public.app-category.productivity",
       "icon": "public/icon.png",
-      "target": ["dmg", "zip"]
+      "target": [
+        "dmg",
+        "zip"
+      ]
     },
     "files": [
       "dist/**/*",
