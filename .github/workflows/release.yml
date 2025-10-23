@@ -25,10 +25,17 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build app
+      - name: Build app (without publish)
         run: npm run electron:build
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Fix latest-mac.yml file names
+        run: |
+          cd release
+          # Replace hyphens with dots in the yml file to match actual file names
+          sed -i '' 's/Hauskat-Mission-Control/Hauskat.Mission.Control/g' latest-mac.yml
+          cat latest-mac.yml
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
