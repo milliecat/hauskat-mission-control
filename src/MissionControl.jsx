@@ -13,6 +13,134 @@ import {
 import HauskatIcon from './HauskatIcon';
 
 const HauskatMissionControlV45 = () => {
+  // Helper function to get color classes for dynamic colors
+  // Tailwind JIT needs complete class names at build time
+  const getColorClasses = (color, type) => {
+    const colorMap = {
+      purple: {
+        bg50: 'bg-purple-50',
+        bg100: 'bg-purple-100',
+        bg200: 'bg-purple-200',
+        bg500: 'bg-purple-500',
+        bg600: 'bg-purple-600',
+        text600: 'text-purple-600',
+        text700: 'text-purple-700',
+        border100: 'border-purple-100',
+        border200: 'border-purple-200',
+        dot: 'bg-purple-400',
+      },
+      cyan: {
+        bg50: 'bg-cyan-50',
+        bg100: 'bg-cyan-100',
+        bg200: 'bg-cyan-200',
+        bg500: 'bg-cyan-500',
+        bg600: 'bg-cyan-600',
+        text600: 'text-cyan-600',
+        text700: 'text-cyan-700',
+        border100: 'border-cyan-100',
+        border200: 'border-cyan-200',
+        dot: 'bg-cyan-400',
+      },
+      green: {
+        bg50: 'bg-green-50',
+        bg100: 'bg-green-100',
+        bg200: 'bg-green-200',
+        bg500: 'bg-green-500',
+        bg600: 'bg-green-600',
+        text600: 'text-green-600',
+        text700: 'text-green-700',
+        border100: 'border-green-100',
+        border200: 'border-green-200',
+        dot: 'bg-green-400',
+      },
+      orange: {
+        bg50: 'bg-orange-50',
+        bg100: 'bg-orange-100',
+        bg200: 'bg-orange-200',
+        bg500: 'bg-orange-500',
+        bg600: 'bg-orange-600',
+        text600: 'text-orange-600',
+        text700: 'text-orange-700',
+        border100: 'border-orange-100',
+        border200: 'border-orange-200',
+        dot: 'bg-orange-400',
+      },
+      yellow: {
+        bg50: 'bg-yellow-50',
+        bg100: 'bg-yellow-100',
+        bg200: 'bg-yellow-200',
+        bg500: 'bg-yellow-500',
+        bg600: 'bg-yellow-600',
+        text600: 'text-yellow-600',
+        text700: 'text-yellow-700',
+        border100: 'border-yellow-100',
+        border200: 'border-yellow-200',
+        dot: 'bg-yellow-400',
+      },
+      blue: {
+        bg50: 'bg-blue-50',
+        bg100: 'bg-blue-100',
+        bg200: 'bg-blue-200',
+        bg500: 'bg-blue-500',
+        bg600: 'bg-blue-600',
+        text600: 'text-blue-600',
+        text700: 'text-blue-700',
+        border100: 'border-blue-100',
+        border200: 'border-blue-200',
+        dot: 'bg-blue-400',
+      },
+      indigo: {
+        bg50: 'bg-indigo-50',
+        bg100: 'bg-indigo-100',
+        bg200: 'bg-indigo-200',
+        bg500: 'bg-indigo-500',
+        bg600: 'bg-indigo-600',
+        text600: 'text-indigo-600',
+        text700: 'text-indigo-700',
+        border100: 'border-indigo-100',
+        border200: 'border-indigo-200',
+        dot: 'bg-indigo-400',
+      },
+      pink: {
+        bg50: 'bg-pink-50',
+        bg100: 'bg-pink-100',
+        bg200: 'bg-pink-200',
+        bg500: 'bg-pink-500',
+        bg600: 'bg-pink-600',
+        text600: 'text-pink-600',
+        text700: 'text-pink-700',
+        border100: 'border-pink-100',
+        border200: 'border-pink-200',
+        dot: 'bg-pink-400',
+      },
+      red: {
+        bg50: 'bg-red-50',
+        bg100: 'bg-red-100',
+        bg200: 'bg-red-200',
+        bg500: 'bg-red-500',
+        bg600: 'bg-red-600',
+        text600: 'text-red-600',
+        text700: 'text-red-700',
+        border100: 'border-red-100',
+        border200: 'border-red-200',
+        dot: 'bg-red-400',
+      },
+      gray: {
+        bg50: 'bg-gray-50',
+        bg100: 'bg-gray-100',
+        bg200: 'bg-gray-200',
+        bg500: 'bg-gray-500',
+        bg600: 'bg-gray-600',
+        text600: 'text-gray-600',
+        text700: 'text-gray-700',
+        border100: 'border-gray-100',
+        border200: 'border-gray-200',
+        dot: 'bg-gray-400',
+      },
+    };
+    return colorMap[color]?.[type] || 'bg-gray-500';
+  };
+
   // Load state from localStorage on mount
   const loadState = (key, defaultValue) => {
     try {
@@ -540,8 +668,8 @@ const HauskatMissionControlV45 = () => {
                   <span className="text-sm text-gray-500">{layer.status}%</span>
                 </div>
                 <div className="w-full bg-gray-200 rounded-full h-3">
-                  <div 
-                    className={`bg-${layer.color}-500 h-3 rounded-full transition-all`}
+                  <div
+                    className={`${getColorClasses(layer.color, 'bg500')} h-3 rounded-full transition-all`}
                     style={{ width: `${layer.status}%` }}
                   />
                 </div>
@@ -630,7 +758,7 @@ const HauskatMissionControlV45 = () => {
             }
           ].map((layer, idx) => (
             <div key={idx} className="relative">
-              <div className={`bg-${layer.color}-50 border-2 border-${layer.color}-200 rounded-lg p-6`}>
+              <div className={`${getColorClasses(layer.color, 'bg50')} border-2 ${getColorClasses(layer.color, 'border200')} rounded-lg p-6`}>
                 <div className="flex items-start justify-between mb-3">
                   <div>
                     <div className="text-sm font-semibold text-gray-500 mb-1">{layer.layer}</div>
@@ -646,13 +774,13 @@ const HauskatMissionControlV45 = () => {
                 <div className="grid grid-cols-2 gap-2 mb-4">
                   {layer.features.map((feature, fidx) => (
                     <div key={fidx} className="flex items-center gap-2 text-xs">
-                      <div className={`w-1.5 h-1.5 bg-${layer.color}-500 rounded-full`} />
+                      <div className={`w-1.5 h-1.5 ${getColorClasses(layer.color, 'bg500')} rounded-full`} />
                       <span>{feature}</span>
                     </div>
                   ))}
                 </div>
                 <div className="flex items-center gap-2">
-                  <Sparkles className={`w-4 h-4 text-${layer.color}-600`} />
+                  <Sparkles className={`w-4 h-4 ${getColorClasses(layer.color, 'text600')}`} />
                   <span className="text-sm font-medium text-gray-700">{layer.value}</span>
                 </div>
               </div>
@@ -806,7 +934,7 @@ const HauskatMissionControlV45 = () => {
                 <div className="flex items-center justify-between mb-4">
                   <div>
                     <div className="flex items-center gap-3">
-                      <span className={`text-${week.color}-600 font-bold text-lg`}>{week.period}</span>
+                      <span className={`${getColorClasses(week.color, 'text600')} font-bold text-lg`}>{week.period}</span>
                       <span className="text-gray-900 font-semibold">{week.title}</span>
                     </div>
                   </div>
@@ -815,13 +943,13 @@ const HauskatMissionControlV45 = () => {
                     <div className="text-2xl font-bold text-gray-900">{progress}%</div>
                   </div>
                 </div>
-                
+
                 <div className="space-y-2">
                   {week.tasks.map((task, tidx) => (
                     <div key={tidx} className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition">
-                      <input 
-                        type="checkbox" 
-                        className={`w-5 h-5 text-${week.color}-600 rounded`}
+                      <input
+                        type="checkbox"
+                        className="w-5 h-5 rounded accent-purple-600"
                         onChange={() => toggleComplete(task.id)}
                         checked={completedItems.has(task.id)}
                       />
@@ -1271,7 +1399,7 @@ const HauskatMissionControlV45 = () => {
           ].map((stat, idx) => (
             <div key={idx} className="bg-white rounded-lg p-4 border-2 border-gray-100">
               <div className="text-sm text-gray-600 mb-1">{stat.label}</div>
-              <div className={`text-3xl font-bold text-${stat.color}-600`}>{stat.count}</div>
+              <div className={`text-3xl font-bold ${getColorClasses(stat.color, 'text600')}`}>{stat.count}</div>
             </div>
           ))}
         </div>
@@ -1283,13 +1411,13 @@ const HauskatMissionControlV45 = () => {
             return (
               <div key={cidx} className="bg-white rounded-xl p-6">
                 <div className="flex items-center gap-3 mb-6">
-                  <Icon className={`w-6 h-6 text-${category.color}-600`} />
+                  <Icon className={`w-6 h-6 ${getColorClasses(category.color, 'text600')}`} />
                   <h3 className="text-2xl font-bold">{category.category} Decisions</h3>
                 </div>
 
                 <div className="space-y-4">
                   {category.items.map((item, iidx) => (
-                    <div key={iidx} className={`border-2 border-${category.color}-100 rounded-lg p-4`}>
+                    <div key={iidx} className={`border-2 ${getColorClasses(category.color, 'border100')} rounded-lg p-4`}>
                       <div className="flex items-start justify-between mb-3">
                         <div className="flex-1">
                           <div className="flex items-center gap-3 mb-2">
@@ -1363,7 +1491,7 @@ const HauskatMissionControlV45 = () => {
 
 // 1. DEV SPRINT BOARD SECTION
 const DevSprintsSection = () => {
-  const [activeSprintFilter, setActiveSprintFilter] = useState('current');
+  const [activeSprintFilter, setActiveSprintFilter] = useState('active');
   
   const sprints = [
     {
@@ -1513,7 +1641,7 @@ const DevSprintsSection = () => {
     }
   ];
 
-  const currentSprint = sprints.find(s => s.status === 'active') || sprints[0];
+  const currentSprint = sprints.find(s => s.status === activeSprintFilter) || sprints.find(s => s.status === 'active') || sprints[0];
 
   return (
     <div className="space-y-6">
@@ -1525,17 +1653,19 @@ const DevSprintsSection = () => {
       {/* Sprint Selector */}
       <div className="bg-white rounded-xl p-6">
         <div className="flex items-center justify-between mb-4">
-          <h3 className="text-xl font-bold">Current Sprint</h3>
+          <h3 className="text-xl font-bold">Sprint Selector</h3>
           <div className="flex gap-2">
             {sprints.map(sprint => (
               <button
                 key={sprint.id}
                 onClick={() => setActiveSprintFilter(sprint.status)}
-                className={`px-3 py-1 rounded-lg text-sm font-medium ${
-                  sprint.status === 'active' 
-                    ? 'bg-green-100 text-green-700' 
-                    : 'bg-gray-100 text-gray-600'
+                className={`px-3 py-1 rounded-lg text-sm font-medium transition ${
+                  activeSprintFilter === sprint.status
+                    ? 'bg-green-100 text-green-700 border-2 border-green-500'
+                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                 }`}
+                aria-label={`View ${sprint.name}`}
+                aria-pressed={activeSprintFilter === sprint.status}
               >
                 {sprint.name.split(':')[0]}
               </button>
@@ -1641,8 +1771,8 @@ const DevSprintsSection = () => {
           { label: 'In Progress', value: 0, color: 'yellow' },
           { label: 'Est. Hours', value: sprints[0].tickets.reduce((acc, t) => acc + parseInt(t.estimate), 0), color: 'purple' }
         ].map((stat, idx) => (
-          <div key={idx} className={`bg-${stat.color}-50 rounded-lg p-4 text-center`}>
-            <div className={`text-2xl font-bold text-${stat.color}-600`}>{stat.value}</div>
+          <div key={idx} className={`${getColorClasses(stat.color, 'bg50')} rounded-lg p-4 text-center`}>
+            <div className={`text-2xl font-bold ${getColorClasses(stat.color, 'text600')}`}>{stat.value}</div>
             <div className="text-sm text-gray-600">{stat.label}</div>
           </div>
         ))}
@@ -2178,8 +2308,8 @@ const RisksBlockersSection = () => {
           { label: 'Medium', count: 1, color: 'yellow' },
           { label: 'Low', count: 3, color: 'green' }
         ].map((stat, idx) => (
-          <div key={idx} className={`bg-${stat.color}-50 border-2 border-${stat.color}-200 rounded-lg p-4 text-center`}>
-            <div className={`text-3xl font-bold text-${stat.color}-600`}>{stat.count}</div>
+          <div key={idx} className={`${getColorClasses(stat.color, 'bg50')} border-2 ${getColorClasses(stat.color, 'border200')} rounded-lg p-4 text-center`}>
+            <div className={`text-3xl font-bold ${getColorClasses(stat.color, 'text600')}`}>{stat.count}</div>
             <div className="text-sm text-gray-600">{stat.label} Risks</div>
           </div>
         ))}
@@ -2544,8 +2674,8 @@ const DecisionLogSection = () => {
             { category: 'Product', count: 1, color: 'green' },
             { category: 'Business', count: 0, color: 'yellow' }
           ].map((cat, idx) => (
-            <div key={idx} className={`bg-${cat.color}-50 rounded-lg p-4 text-center border-2 border-${cat.color}-200`}>
-              <div className={`text-3xl font-bold text-${cat.color}-600`}>{cat.count}</div>
+            <div key={idx} className={`${getColorClasses(cat.color, 'bg50')} rounded-lg p-4 text-center border-2 ${getColorClasses(cat.color, 'border200')}`}>
+              <div className={`text-3xl font-bold ${getColorClasses(cat.color, 'text600')}`}>{cat.count}</div>
               <div className="text-sm text-gray-600">{cat.category}</div>
             </div>
           ))}
@@ -3618,7 +3748,7 @@ const DecisionLogSection = () => {
             }
           ].map((phase, idx) => (
             <div key={idx} className="flex gap-4">
-              <div className={`w-32 text-right font-semibold text-${phase.color}-600`}>
+              <div className={`w-32 text-right font-semibold ${getColorClasses(phase.color, 'text600')}`}>
                 {phase.phase}
               </div>
               <div className="flex-1">
@@ -3626,7 +3756,7 @@ const DecisionLogSection = () => {
                 <ul className="space-y-1">
                   {phase.items.map(item => (
                     <li key={item} className="flex items-center gap-2 text-sm text-gray-600">
-                      <div className={`w-2 h-2 bg-${phase.color}-400 rounded-full`} />
+                      <div className={`w-2 h-2 ${getColorClasses(phase.color, 'dot')} rounded-full`} />
                       {item}
                     </li>
                   ))}
@@ -3782,12 +3912,12 @@ const DecisionLogSection = () => {
                   key={key}
                   onClick={() => setActiveSection(key)}
                   className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg transition relative ${
-                    activeSection === key 
-                      ? `bg-${section.color}-100 text-${section.color}-700 font-medium` 
+                    activeSection === key
+                      ? `${getColorClasses(section.color, 'bg100')} ${getColorClasses(section.color, 'text700')} font-medium`
                       : 'hover:bg-gray-100'
                   }`}
                 >
-                  <Icon className={`w-5 h-5 ${activeSection === key ? `text-${section.color}-600` : 'text-gray-500'}`} />
+                  <Icon className={`w-5 h-5 ${activeSection === key ? getColorClasses(section.color, 'text600') : 'text-gray-500'}`} />
                   {sidebarOpen && (
                     <div className="flex-1 text-left">
                       <div className="text-sm flex items-center gap-2">
