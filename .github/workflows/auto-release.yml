@@ -57,12 +57,58 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Verify build artifacts
+        run: |
+          echo "📦 Verifying build artifacts..."
+          ls -lh release/
+
+          # Check for required files
+          if [ ! -d "release" ]; then
+            echo "❌ Error: release directory not found!"
+            exit 1
+          fi
+
+          DMG_COUNT=$(ls release/*.dmg 2>/dev/null | wc -l)
+          ZIP_COUNT=$(ls release/*.zip 2>/dev/null | wc -l)
+
+          if [ "$DMG_COUNT" -eq 0 ]; then
+            echo "❌ Error: No .dmg files found!"
+            exit 1
+          fi
+
+          if [ "$ZIP_COUNT" -eq 0 ]; then
+            echo "❌ Error: No .zip files found!"
+            exit 1
+          fi
+
+          echo "✅ Found $DMG_COUNT .dmg file(s) and $ZIP_COUNT .zip file(s)"
+
       - name: Fix latest-mac.yml file names
         run: |
           cd release
+          if [ ! -f latest-mac.yml ]; then
+            echo "❌ Error: latest-mac.yml not found!"
+            exit 1
+          fi
           sed -i '' 's/Hauskat-Mission-Control/Hauskat.Mission.Control/g' latest-mac.yml
           echo "✅ Fixed latest-mac.yml"
+
+          # Verify the file contains expected artifact names
+          if ! grep -q "Hauskat.Mission.Control" latest-mac.yml; then
+            echo "⚠️  Warning: latest-mac.yml may not contain expected artifact names"
+            cat latest-mac.yml
+            exit 1
+          fi
+          echo "✅ Verified latest-mac.yml contains correct artifact names"
           cat latest-mac.yml
+
+      - name: Commit version bump
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add package.json package-lock.json
+          git commit -m "chore: bump version to ${{ steps.get_version.outputs.new }} [skip ci]"
+          git push origin main
 
       - name: Create Git Tag
         run: |
