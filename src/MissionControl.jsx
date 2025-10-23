@@ -307,7 +307,7 @@ const HauskatMissionControlV45 = () => {
           <h3 className="text-xl font-bold mb-4">🔗 System Integration Health</h3>
           <div className="space-y-4">
             {[
-              { layer: 'Layer 1: Identity (Loafi Profiles)', status: 80, color: 'purple' },
+              { layer: 'Layer 1: Identity (Profiles)', status: 80, color: 'purple' },
               { layer: 'Layer 2: Data Generation (Wellness)', status: 60, color: 'blue' },
               { layer: 'Layer 3: Intelligence (Knowledge Hub)', status: 70, color: 'green' },
               { layer: 'Layer 4: Utility (Pet Passport)', status: 40, color: 'yellow' },
@@ -364,7 +364,7 @@ const HauskatMissionControlV45 = () => {
           {[
             {
               layer: 'Layer 1: Identity',
-              name: 'Loafi Profiles',
+              name: 'Profiles',
               description: 'MySpace for cats - Customizable profiles, emotional storytelling, community identity',
               features: ['Profile customization', 'Themes & CSS', 'Bio & personality', 'Photo galleries'],
               value: 'Expression & Belonging',
@@ -2279,7 +2279,7 @@ const DecisionLogSection = () => {
             <h4 className="font-semibold text-lg mb-3 text-purple-600">Profile & Wellness</h4>
             <div className="grid grid-cols-3 gap-3">
               {[
-                { icon: 'ðŸ±', name: 'Loafi Profiles', desc: 'Customizable cat profiles with CSS' },
+                { icon: 'ðŸ±', name: 'Profiles', desc: 'Customizable cat profiles with CSS' },
                 { icon: 'ðŸ“Š', name: 'Wellness Tracking', desc: 'Mood, energy, health metrics' },
                 { icon: 'ðŸŽ®', name: 'Enrichment Hub', desc: "Nova's Lab tested activities" },
                 { icon: 'ðŸ“ˆ', name: 'Analytics', desc: 'Insights & comparisons' },
@@ -2360,7 +2360,7 @@ const DecisionLogSection = () => {
             <ul className="space-y-2 text-sm">
               <li className="flex items-start gap-2">
                 <CheckCircle className="w-4 h-4 text-green-500 mt-0.5" />
-                <span>Loafi customizable profiles</span>
+                <span>Customizable profiles</span>
               </li>
               <li className="flex items-start gap-2">
                 <CheckCircle className="w-4 h-4 text-green-500 mt-0.5" />
@@ -2692,7 +2692,7 @@ const DecisionLogSection = () => {
             <ul className="space-y-2 text-sm">
               <li className="flex items-start gap-2">
                 <div className="w-2 h-2 bg-green-500 rounded-full mt-1.5" />
-                <span>Every Loafi profile = indexed page</span>
+                <span>Every profile = indexed page</span>
               </li>
               <li className="flex items-start gap-2">
                 <div className="w-2 h-2 bg-green-500 rounded-full mt-1.5" />
