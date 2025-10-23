@@ -32,6 +32,18 @@ const HauskatMissionControlV45 = () => {
   });
   const [activePhase, setActivePhase] = useState(() => loadState('activePhase', 'planning')); // planning, week1-12, launched
 
+  // State for custom user-added items
+  const [customWorkItems, setCustomWorkItems] = useState(() => loadState('customWorkItems', []));
+  const [customBlockers, setCustomBlockers] = useState(() => loadState('customBlockers', []));
+  const [customWins, setCustomWins] = useState(() => loadState('customWins', []));
+  const [customRisks, setCustomRisks] = useState(() => loadState('customRisks', []));
+  const [customDecisions, setCustomDecisions] = useState(() => loadState('customDecisions', []));
+
+  // Modal state
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalType, setModalType] = useState(''); // 'work', 'blocker', 'win', 'risk', 'decision'
+  const [modalData, setModalData] = useState({});
+
   // Save state to localStorage whenever it changes
   useEffect(() => {
     localStorage.setItem('activeSection', JSON.stringify(activeSection));
@@ -48,6 +60,26 @@ const HauskatMissionControlV45 = () => {
   useEffect(() => {
     localStorage.setItem('activePhase', JSON.stringify(activePhase));
   }, [activePhase]);
+
+  useEffect(() => {
+    localStorage.setItem('customWorkItems', JSON.stringify(customWorkItems));
+  }, [customWorkItems]);
+
+  useEffect(() => {
+    localStorage.setItem('customBlockers', JSON.stringify(customBlockers));
+  }, [customBlockers]);
+
+  useEffect(() => {
+    localStorage.setItem('customWins', JSON.stringify(customWins));
+  }, [customWins]);
+
+  useEffect(() => {
+    localStorage.setItem('customRisks', JSON.stringify(customRisks));
+  }, [customRisks]);
+
+  useEffect(() => {
+    localStorage.setItem('customDecisions', JSON.stringify(customDecisions));
+  }, [customDecisions]);
 
   // Enhanced navigation structure with new v4 sections
   const sections = {
@@ -168,11 +200,194 @@ const HauskatMissionControlV45 = () => {
     });
   };
 
+  // Open modal for adding new items
+  const openModal = (type) => {
+    setModalType(type);
+    setModalData({});
+    setModalOpen(true);
+  };
+
+  // Close modal and reset
+  const closeModal = () => {
+    setModalOpen(false);
+    setModalType('');
+    setModalData({});
+  };
+
+  // Add new item based on type
+  const addNewItem = () => {
+    const timestamp = new Date().toISOString();
+    const newItem = { ...modalData, timestamp, id: `${modalType}-${Date.now()}` };
+
+    switch (modalType) {
+      case 'work':
+        setCustomWorkItems(prev => [...prev, newItem]);
+        break;
+      case 'blocker':
+        setCustomBlockers(prev => [...prev, newItem]);
+        break;
+      case 'win':
+        setCustomWins(prev => [...prev, newItem]);
+        break;
+      case 'risk':
+        setCustomRisks(prev => [...prev, newItem]);
+        break;
+      case 'decision':
+        setCustomDecisions(prev => [...prev, newItem]);
+        break;
+    }
+
+    closeModal();
+  };
+
+  // Delete custom item
+  const deleteCustomItem = (type, id) => {
+    switch (type) {
+      case 'work':
+        setCustomWorkItems(prev => prev.filter(item => item.id !== id));
+        break;
+      case 'blocker':
+        setCustomBlockers(prev => prev.filter(item => item.id !== id));
+        break;
+      case 'win':
+        setCustomWins(prev => prev.filter(item => item.id !== id));
+        break;
+      case 'risk':
+        setCustomRisks(prev => prev.filter(item => item.id !== id));
+        break;
+      case 'decision':
+        setCustomDecisions(prev => prev.filter(item => item.id !== id));
+        break;
+    }
+  };
+
   // Calculate completion percentage
   const calculateCompletion = (items) => {
     if (!items || items.length === 0) return 0;
     const completed = items.filter(item => completedItems.has(item.id)).length;
     return Math.round((completed / items.length) * 100);
+  };
+
+  // Modal Component for Adding Items
+  const InputModal = () => {
+    if (!modalOpen) return null;
+
+    const modalConfig = {
+      work: {
+        title: 'Add What You\'re Working On',
+        fields: [
+          { name: 'person', label: 'Your Name/Role', type: 'text', placeholder: 'e.g., You (Strategy)' },
+          { name: 'task', label: 'What are you working on?', type: 'textarea', placeholder: 'Describe your current task...' },
+          { name: 'status', label: 'Status', type: 'select', options: ['in-progress', 'planning', 'blocked', 'review'] }
+        ]
+      },
+      blocker: {
+        title: 'Report a Blocker',
+        fields: [
+          { name: 'title', label: 'Blocker Title', type: 'text', placeholder: 'Brief description of blocker' },
+          { name: 'description', label: 'Details', type: 'textarea', placeholder: 'What\'s blocking you and why?' },
+          { name: 'owner', label: 'Owner', type: 'text', placeholder: 'Who needs to resolve this?' },
+          { name: 'impact', label: 'Impact', type: 'select', options: ['LOW', 'MEDIUM', 'HIGH', 'CRITICAL'] }
+        ]
+      },
+      win: {
+        title: 'Add a Win to Celebrate',
+        fields: [
+          { name: 'title', label: 'What\'s the win?', type: 'text', placeholder: 'Describe your achievement' },
+          { name: 'details', label: 'Additional Details (optional)', type: 'textarea', placeholder: 'Any context or impact?' }
+        ]
+      },
+      risk: {
+        title: 'Report New Risk or Blocker',
+        fields: [
+          { name: 'title', label: 'Risk/Blocker Title', type: 'text', placeholder: 'Brief description' },
+          { name: 'description', label: 'Description', type: 'textarea', placeholder: 'What\'s the risk and potential impact?' },
+          { name: 'severity', label: 'Severity', type: 'select', options: ['LOW', 'MEDIUM', 'HIGH', 'CRITICAL'] },
+          { name: 'owner', label: 'Owner', type: 'text', placeholder: 'Who should address this?' }
+        ]
+      },
+      decision: {
+        title: 'Document New Decision',
+        fields: [
+          { name: 'title', label: 'Decision Title', type: 'text', placeholder: 'What was decided?' },
+          { name: 'rationale', label: 'Rationale', type: 'textarea', placeholder: 'Why was this decision made?' },
+          { name: 'category', label: 'Category', type: 'select', options: ['Strategic', 'Technical', 'Product', 'Business'] },
+          { name: 'impact', label: 'Impact', type: 'select', options: ['LOW', 'MEDIUM', 'HIGH', 'CRITICAL'] },
+          { name: 'decidedBy', label: 'Decided By', type: 'text', placeholder: 'Who made this decision?' }
+        ]
+      }
+    };
+
+    const config = modalConfig[modalType];
+    if (!config) return null;
+
+    return (
+      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div className="bg-white rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+          <div className="sticky top-0 bg-white border-b px-6 py-4 flex justify-between items-center">
+            <h3 className="text-2xl font-bold">{config.title}</h3>
+            <button
+              onClick={closeModal}
+              className="p-2 hover:bg-gray-100 rounded-lg transition"
+            >
+              <X className="w-6 h-6" />
+            </button>
+          </div>
+
+          <div className="p-6 space-y-4">
+            {config.fields.map((field) => (
+              <div key={field.name}>
+                <label className="block text-sm font-semibold mb-2">{field.label}</label>
+                {field.type === 'text' && (
+                  <input
+                    type="text"
+                    value={modalData[field.name] || ''}
+                    onChange={(e) => setModalData({ ...modalData, [field.name]: e.target.value })}
+                    placeholder={field.placeholder}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  />
+                )}
+                {field.type === 'textarea' && (
+                  <textarea
+                    value={modalData[field.name] || ''}
+                    onChange={(e) => setModalData({ ...modalData, [field.name]: e.target.value })}
+                    placeholder={field.placeholder}
+                    rows={4}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  />
+                )}
+                {field.type === 'select' && (
+                  <select
+                    value={modalData[field.name] || field.options[0]}
+                    onChange={(e) => setModalData({ ...modalData, [field.name]: e.target.value })}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  >
+                    {field.options.map((option) => (
+                      <option key={option} value={option}>{option}</option>
+                    ))}
+                  </select>
+                )}
+              </div>
+            ))}
+          </div>
+
+          <div className="sticky bottom-0 bg-gray-50 px-6 py-4 flex gap-3 justify-end border-t">
+            <button
+              onClick={closeModal}
+              className="px-6 py-2 border border-gray-300 rounded-lg hover:bg-gray-100 transition"
+            >
+              Cancel
+            </button>
+            <button
+              onClick={addNewItem}
+              className="px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition"
+            >
+              Add
+            </button>
+          </div>
+        </div>
+      </div>
+    );
   };
 
   // Enhanced Overview Dashboard
@@ -1467,7 +1682,27 @@ const TeamSyncSection = () => {
               </span>
             </div>
           ))}
-          <button className="w-full px-4 py-3 border-2 border-dashed border-gray-300 rounded-lg text-gray-500 hover:border-gray-400 hover:text-gray-600 transition">
+          {customWorkItems.map((item) => (
+            <div key={item.id} className="flex items-center gap-4 p-4 bg-gradient-to-r from-blue-50 to-green-50 rounded-lg">
+              <div className="flex-1">
+                <div className="font-semibold">{item.person}</div>
+                <div className="text-sm text-gray-600">{item.task}</div>
+              </div>
+              <span className="text-xs font-semibold px-3 py-1 bg-green-100 text-green-700 rounded-full">
+                {item.status}
+              </span>
+              <button
+                onClick={() => deleteCustomItem('work', item.id)}
+                className="p-1 hover:bg-red-100 rounded transition"
+              >
+                <X className="w-4 h-4 text-red-600" />
+              </button>
+            </div>
+          ))}
+          <button
+            onClick={() => openModal('work')}
+            className="w-full px-4 py-3 border-2 border-dashed border-gray-300 rounded-lg text-gray-500 hover:border-gray-400 hover:text-gray-600 transition"
+          >
             + Add what you're working on
           </button>
         </div>
@@ -1491,8 +1726,33 @@ const TeamSyncSection = () => {
               </div>
             </div>
           </div>
-          
-          <button className="w-full px-4 py-3 border-2 border-dashed border-gray-300 rounded-lg text-gray-500 hover:border-gray-400 hover:text-gray-600 transition">
+          {customBlockers.map((item) => (
+            <div key={item.id} className="p-4 bg-red-50 border-l-4 border-red-500 rounded">
+              <div className="flex items-start gap-3">
+                <AlertCircle className="w-5 h-5 text-red-600 mt-0.5" />
+                <div className="flex-1">
+                  <div className="font-semibold text-red-900">{item.title}</div>
+                  <div className="text-sm text-red-700 mt-1">
+                    Owner: {item.owner} • Impact: {item.impact}
+                  </div>
+                  <div className="text-sm text-gray-600 mt-2">
+                    {item.description}
+                  </div>
+                </div>
+                <button
+                  onClick={() => deleteCustomItem('blocker', item.id)}
+                  className="p-1 hover:bg-red-100 rounded transition"
+                >
+                  <X className="w-4 h-4 text-red-600" />
+                </button>
+              </div>
+            </div>
+          ))}
+
+          <button
+            onClick={() => openModal('blocker')}
+            className="w-full px-4 py-3 border-2 border-dashed border-gray-300 rounded-lg text-gray-500 hover:border-gray-400 hover:text-gray-600 transition"
+          >
             + Report a blocker
           </button>
         </div>
@@ -1524,7 +1784,25 @@ const TeamSyncSection = () => {
             <Star className="w-5 h-5 text-yellow-500" />
             <span>Completed comprehensive Mission Control v4 with 12 sections!</span>
           </div>
-          <button className="w-full px-4 py-3 border-2 border-dashed border-purple-300 rounded-lg text-purple-600 hover:border-purple-400 transition">
+          {customWins.map((item) => (
+            <div key={item.id} className="flex items-center gap-3 p-3 bg-white rounded-lg">
+              <Star className="w-5 h-5 text-yellow-500" />
+              <div className="flex-1">
+                <div className="font-semibold">{item.title}</div>
+                {item.details && <div className="text-sm text-gray-600 mt-1">{item.details}</div>}
+              </div>
+              <button
+                onClick={() => deleteCustomItem('win', item.id)}
+                className="p-1 hover:bg-red-100 rounded transition"
+              >
+                <X className="w-4 h-4 text-red-600" />
+              </button>
+            </div>
+          ))}
+          <button
+            onClick={() => openModal('win')}
+            className="w-full px-4 py-3 border-2 border-dashed border-purple-300 rounded-lg text-purple-600 hover:border-purple-400 transition"
+          >
             + Add a win to celebrate
           </button>
         </div>
@@ -2063,8 +2341,56 @@ const RisksBlockersSection = () => {
         </div>
       </div>
 
+      {/* Custom Risks */}
+      {customRisks.length > 0 && (
+        <div className="bg-white rounded-xl p-6">
+          <h3 className="text-2xl font-bold mb-4">📋 Custom Risks</h3>
+          <div className="space-y-4">
+            {customRisks.map((item) => (
+              <div key={item.id} className={`border-l-4 rounded-lg p-4 ${
+                item.severity === 'CRITICAL' ? 'border-red-500 bg-red-50' :
+                item.severity === 'HIGH' ? 'border-orange-500 bg-orange-50' :
+                item.severity === 'MEDIUM' ? 'border-yellow-500 bg-yellow-50' :
+                'border-green-500 bg-green-50'
+              }`}>
+                <div className="flex items-start gap-4">
+                  <AlertCircle className={`w-6 h-6 mt-1 ${
+                    item.severity === 'CRITICAL' ? 'text-red-600' :
+                    item.severity === 'HIGH' ? 'text-orange-600' :
+                    item.severity === 'MEDIUM' ? 'text-yellow-600' :
+                    'text-green-600'
+                  }`} />
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-2">
+                      <h4 className="font-bold text-lg">{item.title}</h4>
+                      <span className={`text-xs font-bold px-2 py-1 rounded ${
+                        item.severity === 'CRITICAL' ? 'bg-red-100 text-red-700' :
+                        item.severity === 'HIGH' ? 'bg-orange-100 text-orange-700' :
+                        item.severity === 'MEDIUM' ? 'bg-yellow-100 text-yellow-700' :
+                        'bg-green-100 text-green-700'
+                      }`}>{item.severity}</span>
+                    </div>
+                    <div className="text-sm mb-2">{item.description}</div>
+                    <div className="text-xs text-gray-600">Owner: {item.owner}</div>
+                  </div>
+                  <button
+                    onClick={() => deleteCustomItem('risk', item.id)}
+                    className="p-1 hover:bg-red-100 rounded transition"
+                  >
+                    <X className="w-4 h-4 text-red-600" />
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* Add New Risk */}
-      <button className="w-full px-6 py-4 bg-gradient-to-r from-orange-50 to-red-50 border-2 border-dashed border-orange-300 rounded-lg text-orange-700 font-semibold hover:border-orange-400 transition">
+      <button
+        onClick={() => openModal('risk')}
+        className="w-full px-6 py-4 bg-gradient-to-r from-orange-50 to-red-50 border-2 border-dashed border-orange-300 rounded-lg text-orange-700 font-semibold hover:border-orange-400 transition"
+      >
         + Report New Risk or Blocker
       </button>
     </div>
@@ -2220,8 +2546,51 @@ const DecisionLogSection = () => {
         </div>
       </div>
 
+      {/* Custom Decisions */}
+      {customDecisions.length > 0 && (
+        <div className="bg-white rounded-xl p-6">
+          <h3 className="text-2xl font-bold mb-4">📝 Your Custom Decisions</h3>
+          <div className="space-y-4">
+            {customDecisions.map((item) => (
+              <div key={item.id} className="border-2 border-purple-200 rounded-lg p-4 bg-purple-50">
+                <div className="flex items-start gap-4">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-2">
+                      <h4 className="font-bold text-lg">{item.title}</h4>
+                      <span className={`text-xs font-bold px-2 py-1 rounded ${
+                        item.category === 'Strategic' ? 'bg-purple-100 text-purple-700' :
+                        item.category === 'Technical' ? 'bg-blue-100 text-blue-700' :
+                        item.category === 'Product' ? 'bg-green-100 text-green-700' :
+                        'bg-yellow-100 text-yellow-700'
+                      }`}>{item.category}</span>
+                      <span className={`text-xs font-bold px-2 py-1 rounded ${
+                        item.impact === 'CRITICAL' ? 'bg-red-100 text-red-700' :
+                        item.impact === 'HIGH' ? 'bg-orange-100 text-orange-700' :
+                        item.impact === 'MEDIUM' ? 'bg-yellow-100 text-yellow-700' :
+                        'bg-green-100 text-green-700'
+                      }`}>{item.impact}</span>
+                    </div>
+                    <div className="text-sm mb-2"><strong>Rationale:</strong> {item.rationale}</div>
+                    <div className="text-xs text-gray-600">Decided by: {item.decidedBy}</div>
+                  </div>
+                  <button
+                    onClick={() => deleteCustomItem('decision', item.id)}
+                    className="p-1 hover:bg-red-100 rounded transition"
+                  >
+                    <X className="w-4 h-4 text-red-600" />
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* Add New Decision */}
-      <button className="w-full px-6 py-4 bg-gradient-to-r from-purple-50 to-indigo-50 border-2 border-dashed border-purple-300 rounded-lg text-purple-700 font-semibold hover:border-purple-400 transition">
+      <button
+        onClick={() => openModal('decision')}
+        className="w-full px-6 py-4 bg-gradient-to-r from-purple-50 to-indigo-50 border-2 border-dashed border-purple-300 rounded-lg text-purple-700 font-semibold hover:border-purple-400 transition"
+      >
         + Document New Decision
       </button>
 
@@ -3442,6 +3811,9 @@ const DecisionLogSection = () => {
           {renderSection()}
         </div>
       </div>
+
+      {/* Modal for Adding Items */}
+      <InputModal />
     </div>
   );
 };
