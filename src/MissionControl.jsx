@@ -200,7 +200,7 @@ const HauskatMissionControlV45 = () => {
             <Cat className="w-12 h-12" />
             <Heart className="w-8 h-8 animate-pulse" />
           </div>
-          <h1 className="text-4xl font-bold mb-2">Hauskat Mission Control v4</h1>
+          <h1 className="text-4xl font-bold mb-2">Hauskat Mission Control v4.5</h1>
           <p className="text-xl opacity-90">The Emotional Operating System for Cat Care</p>
           <div className="mt-6 grid grid-cols-3 gap-4">
             <div className="bg-white/20 backdrop-blur rounded-lg p-3">
@@ -1522,7 +1522,7 @@ const TeamSyncSection = () => {
         <div className="space-y-2">
           <div className="flex items-center gap-3 p-3 bg-white rounded-lg">
             <Star className="w-5 h-5 text-yellow-500" />
-            <span>Completed comprehensive Mission Control v4 with 12 sections!</span>
+            <span>Completed comprehensive Mission Control v4.5 with enhanced features!</span>
           </div>
           <button className="w-full px-4 py-3 border-2 border-dashed border-purple-300 rounded-lg text-purple-600 hover:border-purple-400 transition">
             + Add a win to celebrate
