@@ -27,7 +27,7 @@
         "arch": ["x64", "arm64"]
       }
     ],
-    "icon": "public/icon.svg",
+    "icon": "public/icon.icns",
     "darkModeSupport": true
   },
   "dmg": {
