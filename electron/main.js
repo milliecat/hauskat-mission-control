@@ -12,26 +12,41 @@ const store = new Store();
 
 let mainWindow;
 
-// Configure auto-updater
+// Configure auto-updater with verbose logging
 autoUpdater.autoDownload = false;
 autoUpdater.autoInstallOnAppQuit = true;
+autoUpdater.logger = console;
+autoUpdater.logger.transports.console.level = 'debug';
 
-// Auto-updater event listeners
+// Log the feed URL being used
+console.log('=== AUTO-UPDATER CONFIGURATION ===');
+console.log('App version:', app.getVersion());
+console.log('App is packaged:', app.isPackaged);
+console.log('Platform:', process.platform);
+console.log('Arch:', process.arch);
+
+// Auto-updater event listeners with detailed logging
 autoUpdater.on('checking-for-update', () => {
-  console.log('Checking for updates...');
+  console.log('=== CHECKING FOR UPDATES ===');
+  console.log('Feed URL:', autoUpdater.getFeedURL());
 });
 
 autoUpdater.on('update-available', (info) => {
-  console.log('Update available:', info.version);
+  console.log('=== UPDATE AVAILABLE ===');
+  console.log('New version:', info.version);
+  console.log('Release date:', info.releaseDate);
+  console.log('Files:', info.files);
+
   dialog.showMessageBox(mainWindow, {
     type: 'info',
     title: 'Update Available',
-    message: `A new version (${info.version}) is available!`,
+    message: `A new version (${info.version}) is available!\n\nCurrent: ${app.getVersion()}\nNew: ${info.version}`,
     buttons: ['Download Update', 'Later'],
     defaultId: 0,
     cancelId: 1
   }).then((result) => {
     if (result.response === 0) {
+      console.log('User clicked Download Update');
       autoUpdater.downloadUpdate();
       dialog.showMessageBox(mainWindow, {
         type: 'info',
@@ -39,25 +54,52 @@ autoUpdater.on('update-available', (info) => {
         message: 'Update is being downloaded in the background. You\'ll be notified when it\'s ready.',
         buttons: ['OK']
       });
+    } else {
+      console.log('User clicked Later');
     }
   });
 });
 
-autoUpdater.on('update-not-available', () => {
-  console.log('No updates available');
+autoUpdater.on('update-not-available', (info) => {
+  console.log('=== NO UPDATE AVAILABLE ===');
+  console.log('Current version:', app.getVersion());
+  console.log('Info:', info);
+
+  // Show dialog when manually checking
+  if (mainWindow && mainWindow.isFocused()) {
+    dialog.showMessageBox(mainWindow, {
+      type: 'info',
+      title: 'No Updates',
+      message: `You're on the latest version (${app.getVersion()})`,
+      buttons: ['OK']
+    });
+  }
 });
 
 autoUpdater.on('error', (err) => {
-  console.error('Error in auto-updater:', err);
+  console.error('=== AUTO-UPDATER ERROR ===');
+  console.error('Error message:', err.message);
+  console.error('Error stack:', err.stack);
+  console.error('Full error:', err);
+
+  dialog.showMessageBox(mainWindow, {
+    type: 'error',
+    title: 'Update Error',
+    message: `Failed to check for updates:\n\n${err.message}`,
+    buttons: ['OK']
+  });
 });
 
 autoUpdater.on('download-progress', (progressObj) => {
-  let message = `Download speed: ${progressObj.bytesPerSecond} - Downloaded ${progressObj.percent}%`;
-  console.log(message);
+  console.log('=== DOWNLOAD PROGRESS ===');
+  console.log(`Downloaded ${progressObj.percent.toFixed(2)}% (${progressObj.transferred}/${progressObj.total})`);
+  console.log(`Speed: ${progressObj.bytesPerSecond} bytes/sec`);
 });
 
 autoUpdater.on('update-downloaded', (info) => {
-  console.log('Update downloaded:', info.version);
+  console.log('=== UPDATE DOWNLOADED ===');
+  console.log('Version:', info.version);
+
   dialog.showMessageBox(mainWindow, {
     type: 'info',
     title: 'Update Ready',
@@ -67,6 +109,7 @@ autoUpdater.on('update-downloaded', (info) => {
     cancelId: 1
   }).then((result) => {
     if (result.response === 0) {
+      console.log('Quitting and installing update');
       autoUpdater.quitAndInstall();
     }
   });
