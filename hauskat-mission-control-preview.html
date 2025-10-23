@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hauskat Mission Control v4.5 - Preview</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #f3f4f6, #e5e7eb);
+        }
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 280px;
+            background: white;
+            border-right: 2px solid #e5e7eb;
+            overflow-y: auto;
+        }
+        .main-content {
+            margin-left: 280px;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+        .section-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .nav-item {
+            padding: 0.75rem 1rem;
+            margin: 0.25rem 0.5rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .nav-item:hover {
+            background: #f3f4f6;
+        }
+        .nav-item.active {
+            background: linear-gradient(to right, #8b5cf6, #ec4899);
+            color: white;
+        }
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .ticket-card {
+            border: 2px solid #e5e7eb;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        .ticket-card:hover {
+            border-color: #8b5cf6;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div style="padding: 1.5rem; border-bottom: 2px solid #e5e7eb;">
+            <div style="font-size: 1.5rem; font-weight: 800; background: linear-gradient(to right, #8b5cf6, #ec4899); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+                Hauskat
+            </div>
+            <div style="font-size: 0.75rem; font-weight: 600; color: #8b5cf6; margin-top: 0.25rem;">
+                Mission Control v4.5
+            </div>
+        </div>
+        
+        <div style="padding: 1rem 0;">
+            <div onclick="showSection('overview')" class="nav-item active" id="nav-overview">
+                <div style="font-weight: 600;">🚀 Mission Control</div>
+                <div style="font-size: 0.75rem; color: #9ca3af;">Command center & progress</div>
+            </div>
+            
+            <div style="padding: 0.5rem 1rem; margin-top: 1rem;">
+                <div style="font-size: 0.75rem; font-weight: 700; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em;">
+                    Developer Tools (NEW)
+                </div>
+            </div>
+            
+            <div onclick="showSection('sprints')" class="nav-item" id="nav-sprints">
+                <div style="font-weight: 600;">🎫 Dev Sprint Board</div>
+                <div style="font-size: 0.75rem; color: #9ca3af;">Actionable dev tickets</div>
+            </div>
+            
+            <div onclick="showSection('sync')" class="nav-item" id="nav-sync">
+                <div style="font-weight: 600;">🤝 Team Sync</div>
+                <div style="font-size: 0.75rem; color: #9ca3af;">Daily status & blockers</div>
+            </div>
+            
+            <div onclick="showSection('specs')" class="nav-item" id="nav-specs">
+                <div style="font-weight: 600;">🏗️ Technical Specs</div>
+                <div style="font-size: 0.75rem; color: #9ca3af;">APIs, schemas, ADRs</div>
+            </div>
+            
+            <div onclick="showSection('risks')" class="nav-item" id="nav-risks">
+                <div style="font-weight: 600;">⚠️ Risks & Blockers</div>
+                <div style="font-size: 0.75rem; color: #9ca3af;">Track issues early</div>
+            </div>
+            
+            <div onclick="showSection('decisions')" class="nav-item" id="nav-decisions">
+                <div style="font-weight: 600;">📝 Decision Log</div>
+                <div style="font-size: 0.75rem; color: #9ca3af;">Why decisions made</div>
+            </div>
+            
+            <div style="padding: 0.5rem 1rem; margin-top: 1rem;">
+                <div style="font-size: 0.75rem; font-weight: 700; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em;">
+                    Strategic & Docs
+                </div>
+            </div>
+            
+            <div onclick="showSection('plan90')" class="nav-item" id="nav-plan90">
+                <div style="font-weight: 600;">📅 90-Day Action Plan</div>
+            </div>
+            
+            <div onclick="showSection('gaps')" class="nav-item" id="nav-gaps">
+                <div style="font-weight: 600;">🔍 Gap Analysis</div>
+            </div>
+            
+            <div onclick="showSection('features')" class="nav-item" id="nav-features">
+                <div style="font-weight: 600;">✨ Features & Functions</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Overview Section -->
+        <div id="section-overview" class="content-section">
+            <div style="background: linear-gradient(to right, #8b5cf6, #ec4899); color: white; border-radius: 1rem; padding: 2rem; margin-bottom: 2rem;">
+                <h1 style="font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem;">🚀 Hauskat Mission Control v4.5</h1>
+                <p style="font-size: 1.125rem;">Your complete team operating system with 17 sections</p>
+            </div>
+
+            <div class="section-card">
+                <h2 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem;">🎉 What's New in v4.5</h2>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+                    <div style="background: linear-gradient(to bottom right, #dbeafe, #bfdbfe); padding: 1.5rem; border-radius: 0.75rem;">
+                        <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">🎫</div>
+                        <div style="font-weight: 700; margin-bottom: 0.5rem;">Dev Sprint Board</div>
+                        <div style="font-size: 0.875rem; color: #374151;">Actionable tickets with acceptance criteria, estimates, and dependencies</div>
+                    </div>
+                    <div style="background: linear-gradient(to bottom right, #d1fae5, #a7f3d0); padding: 1.5rem; border-radius: 0.75rem;">
+                        <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">🤝</div>
+                        <div style="font-weight: 700; margin-bottom: 0.5rem;">Team Sync Dashboard</div>
+                        <div style="font-size: 0.875rem; color: #374151;">Daily coordination without meetings</div>
+                    </div>
+                    <div style="background: linear-gradient(to bottom right, #e0e7ff, #c7d2fe); padding: 1.5rem; border-radius: 0.75rem;">
+                        <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">🏗️</div>
+                        <div style="font-weight: 700; margin-bottom: 0.5rem;">Technical Specs Hub</div>
+                        <div style="font-size: 0.875rem; color: #374151;">Database schemas, API docs, ADRs</div>
+                    </div>
+                    <div style="background: linear-gradient(to bottom right, #fee2e2, #fecaca); padding: 1.5rem; border-radius: 0.75rem;">
+                        <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">⚠️</div>
+                        <div style="font-weight: 700; margin-bottom: 0.5rem;">Risks & Blockers</div>
+                        <div style="font-size: 0.875rem; color: #374151;">Proactive risk management</div>
+                    </div>
+                    <div style="background: linear-gradient(to bottom right, #fae8ff, #f3e8ff); padding: 1.5rem; border-radius: 0.75rem;">
+                        <div style="font-size: 1.5rem; margin-bottom: 0.5rem;">📝</div>
+                        <div style="font-weight: 700; margin-bottom: 0.5rem;">Decision Log</div>
+                        <div style="font-size: 0.875rem; color: #374151;">Preserve context and decisions</div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                <div class="section-card" style="text-align: center;">
+                    <div style="font-size: 2.5rem; font-weight: 800; color: #8b5cf6;">17</div>
+                    <div style="color: #6b7280;">Total Sections</div>
+                </div>
+                <div class="section-card" style="text-align: center;">
+                    <div style="font-size: 2.5rem; font-weight: 800; color: #10b981;">5</div>
+                    <div style="color: #6b7280;">New Dev Tools</div>
+                </div>
+                <div class="section-card" style="text-align: center;">
+                    <div style="font-size: 2.5rem; font-weight: 800; color: #f59e0b;">8</div>
+                    <div style="color: #6b7280;">Ready Tickets</div>
+                </div>
+                <div class="section-card" style="text-align: center;">
+                    <div style="font-size: 2.5rem; font-weight: 800; color: #ef4444;">3</div>
+                    <div style="color: #6b7280;">DB Tables Spec'd</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dev Sprint Board Section -->
+        <div id="section-sprints" class="content-section" style="display: none;">
+            <div style="background: linear-gradient(to right, #06b6d4, #3b82f6); color: white; border-radius: 1rem; padding: 2rem; margin-bottom: 2rem;">
+                <h1 style="font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem;">🎫 Dev Sprint Board</h1>
+                <p style="font-size: 1.125rem;">Actionable tickets converted from strategic plan</p>
+            </div>
+
+            <div class="section-card" style="background: linear-gradient(to right, #dbeafe, #e0f2fe); border: 2px solid #3b82f6;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                    <div>
+                        <div style="font-size: 1.25rem; font-weight: 700;">Sprint 1: Foundation</div>
+                        <div style="color: #6b7280;">Week 1-2 (Oct 28 - Nov 8)</div>
+                    </div>
+                    <div style="text-align: right;">
+                        <div style="font-size: 1.5rem; font-weight: 800; color: #3b82f6;">5 tickets</div>
+                        <div style="font-size: 0.875rem; color: #6b7280;">Est: 26h total</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ticket HK-001 -->
+            <div class="ticket-card">
+                <div style="display: flex; gap: 1rem;">
+                    <input type="checkbox" style="width: 1.25rem; height: 1.25rem; margin-top: 0.25rem;">
+                    <div style="flex: 1;">
+                        <div style="display: flex; gap: 0.5rem; align-items: center; margin-bottom: 0.5rem;">
+                            <span style="font-family: monospace; font-size: 0.75rem; color: #6b7280;">HK-001</span>
+                            <span class="badge" style="background: #fee2e2; color: #991b1b;">HIGH</span>
+                            <span style="font-size: 0.75rem; color: #6b7280;">Est: 4h</span>
+                        </div>
+                        <div style="font-weight: 700; font-size: 1.125rem; margin-bottom: 0.5rem;">
+                            Set up Next.js 14 project with TypeScript
+                        </div>
+                        <div style="font-size: 0.875rem; color: #6b7280; margin-bottom: 0.75rem;">
+                            👤 Dev Partner
+                        </div>
+                        
+                        <div style="background: #f9fafb; padding: 0.75rem; border-radius: 0.5rem; margin-bottom: 0.75rem;">
+                            <div style="font-size: 0.75rem; font-weight: 700; color: #374151; margin-bottom: 0.5rem;">Acceptance Criteria:</div>
+                            <div style="display: flex; flex-direction: column; gap: 0.25rem;">
+                                <div style="display: flex; gap: 0.5rem; font-size: 0.875rem; color: #6b7280;">
+                                    <span>✓</span>
+                                    <span>Next.js 14 installed and configured</span>
+                                </div>
+                                <div style="display: flex; gap: 0.5rem; font-size: 0.875rem; color: #6b7280;">
+                                    <span>✓</span>
+                                    <span>TypeScript strict mode enabled</span>
+                                </div>
+                                <div style="display: flex; gap: 0.5rem; font-size: 0.875rem; color: #6b7280;">
+                                    <span>✓</span>
+                                    <span>ESLint and Prettier configured</span>
+                                </div>
+                                <div style="display: flex; gap: 0.5rem; font-size: 0.875rem; color: #6b7280;">
+                                    <span>✓</span>
+                                    <span>Git repository initialized</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                            <span class="badge" style="background: #dbeafe; color: #1e40af;">setup</span>
+                            <span class="badge" style="background: #dbeafe; color: #1e40af;">infrastructure</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- More tickets preview -->
+            <div class="section-card" style="background: #f9fafb; text-align: center; color: #6b7280;">
+                <p style="margin: 0;">+ 4 more tickets (HK-002 through HK-005)</p>
+                <p style="margin: 0.5rem 0 0 0; font-size: 0.875rem;">Full details in the React component</p>
+            </div>
+        </div>
+
+        <!-- Team Sync Section -->
+        <div id="section-sync" class="content-section" style="display: none;">
+            <div style="background: linear-gradient(to right, #10b981, #059669); color: white; border-radius: 1rem; padding: 2rem; margin-bottom: 2rem;">
+                <h1 style="font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem;">🤝 Team Sync Dashboard</h1>
+                <p style="font-size: 1.125rem;">Daily status, blockers, and coordination at a glance</p>
+            </div>
+
+            <div class="section-card">
+                <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem;">🎯 Working On Today</h3>
+                <div style="background: linear-gradient(to right, #dbeafe, #d1fae5); padding: 1rem; border-radius: 0.5rem; margin-bottom: 0.75rem;">
+                    <div style="font-weight: 600;">You (Strategy)</div>
+                    <div style="font-size: 0.875rem; color: #374151;">Finalizing Mission Control v4.5 enhancements</div>
+                </div>
+                <div style="background: linear-gradient(to right, #dbeafe, #d1fae5); padding: 1rem; border-radius: 0.5rem;">
+                    <div style="font-weight: 600;">Dev Partner</div>
+                    <div style="font-size: 0.875rem; color: #374151;">Setting up Next.js project structure</div>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem;">🚧 Blockers & Help Needed</h3>
+                <div style="background: #fee2e2; border-left: 4px solid #dc2626; padding: 1rem; border-radius: 0.5rem;">
+                    <div style="font-weight: 700; color: #7f1d1d; margin-bottom: 0.5rem;">
+                        Waiting: Design mockups for profile screens
+                    </div>
+                    <div style="font-size: 0.875rem; color: #991b1b; margin-bottom: 0.75rem;">
+                        Blocked since: Oct 20 • Owner: You • Impact: HIGH
+                    </div>
+                    <div style="font-size: 0.875rem; color: #6b7280;">
+                        Need 3 core screens designed before dev can start profile builder work
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Technical Specs Section -->
+        <div id="section-specs" class="content-section" style="display: none;">
+            <div style="background: linear-gradient(to right, #6366f1, #8b5cf6); color: white; border-radius: 1rem; padding: 2rem; margin-bottom: 2rem;">
+                <h1 style="font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem;">🏗️ Technical Specs Hub</h1>
+                <p style="font-size: 1.125rem;">Database schemas, API docs, and architecture decisions</p>
+            </div>
+
+            <div class="section-card">
+                <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem;">🗄️ Database Schema</h3>
+                
+                <div style="border: 2px solid #c7d2fe; border-radius: 0.75rem; padding: 1.5rem; margin-bottom: 1rem;">
+                    <h4 style="font-weight: 700; font-size: 1.125rem; margin-bottom: 1rem;">users</h4>
+                    <div style="font-family: monospace; font-size: 0.875rem;">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr 2fr; gap: 0.5rem; font-weight: 700; padding-bottom: 0.5rem; border-bottom: 1px solid #e5e7eb;">
+                            <div>Field</div>
+                            <div>Type</div>
+                            <div>Notes</div>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr 2fr; gap: 0.5rem; padding-top: 0.5rem; color: #6b7280;">
+                            <div style="color: #3b82f6;">id</div>
+                            <div style="color: #8b5cf6;">UUID</div>
+                            <div style="font-size: 0.75rem;">Primary key</div>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr 2fr; gap: 0.5rem; padding-top: 0.5rem; color: #6b7280;">
+                            <div style="color: #3b82f6;">email</div>
+                            <div style="color: #8b5cf6;">VARCHAR(255)</div>
+                            <div style="font-size: 0.75rem;">Unique, indexed</div>
+                        </div>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr 2fr; gap: 0.5rem; padding-top: 0.5rem; color: #6b7280;">
+                            <div style="color: #3b82f6;">password_hash</div>
+                            <div style="color: #8b5cf6;">VARCHAR(255)</div>
+                            <div style="font-size: 0.75rem;">Hashed with bcrypt</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="background: #f9fafb; padding: 1rem; border-radius: 0.5rem; text-align: center; color: #6b7280;">
+                    + cat_profiles and wellness_logs tables fully documented in React component
+                </div>
+            </div>
+
+            <div class="section-card">
+                <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem;">🔌 API Endpoints</h3>
+                
+                <div style="border-left: 4px solid #10b981; padding-left: 1rem; margin-bottom: 1rem;">
+                    <div style="display: flex; gap: 0.75rem; align-items: center; margin-bottom: 0.5rem;">
+                        <span class="badge" style="background: #d1fae5; color: #065f46;">POST</span>
+                        <code style="font-size: 0.875rem;">/api/auth/register</code>
+                    </div>
+                    <div style="font-size: 0.875rem; color: #6b7280;">
+                        <strong>Body:</strong> { email, password, name }<br>
+                        <strong>Returns:</strong> { user, token }
+                    </div>
+                </div>
+
+                <div style="background: #f9fafb; padding: 1rem; border-radius: 0.5rem; text-align: center; color: #6b7280;">
+                    + 4 more endpoints fully documented in React component
+                </div>
+            </div>
+        </div>
+
+        <!-- Risks Section -->
+        <div id="section-risks" class="content-section" style="display: none;">
+            <div style="background: linear-gradient(to right, #ef4444, #f97316); color: white; border-radius: 1rem; padding: 2rem; margin-bottom: 2rem;">
+                <h1 style="font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem;">⚠️ Risks & Blockers Tracker</h1>
+                <p style="font-size: 1.125rem;">Surface issues early, plan mitigation strategies</p>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+                <div style="background: #fee2e2; border: 2px solid #fca5a5; border-radius: 0.75rem; padding: 1.5rem; text-align: center;">
+                    <div style="font-size: 2.5rem; font-weight: 800; color: #dc2626;">0</div>
+                    <div style="color: #6b7280;">Critical Risks</div>
+                </div>
+                <div style="background: #fed7aa; border: 2px solid #fdba74; border-radius: 0.75rem; padding: 1.5rem; text-align: center;">
+                    <div style="font-size: 2.5rem; font-weight: 800; color: #ea580c;">2</div>
+                    <div style="color: #6b7280;">High Risks</div>
+                </div>
+                <div style="background: #fef3c7; border: 2px solid #fde68a; border-radius: 0.75rem; padding: 1.5rem; text-align: center;">
+                    <div style="font-size: 2.5rem; font-weight: 800; color: #d97706;">1</div>
+                    <div style="color: #6b7280;">Medium Risks</div>
+                </div>
+                <div style="background: #d1fae5; border: 2px solid #a7f3d0; border-radius: 0.75rem; padding: 1.5rem; text-align: center;">
+                    <div style="font-size: 2.5rem; font-weight: 800; color: #059669;">3</div>
+                    <div style="color: #6b7280;">Low Risks</div>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem;">🚨 Active Risks</h3>
+                
+                <div style="border-left: 4px solid #f97316; background: #fed7aa; padding: 1.5rem; border-radius: 0.5rem;">
+                    <div style="display: flex; gap: 0.75rem; margin-bottom: 0.75rem;">
+                        <div style="font-weight: 700; font-size: 1.125rem; flex: 1;">Design System Not Defined</div>
+                        <span class="badge" style="background: #fed7aa; color: #7c2d12;">HIGH</span>
+                    </div>
+                    <div style="font-size: 0.875rem; margin-bottom: 0.5rem;"><strong>Category:</strong> Technical</div>
+                    <div style="font-size: 0.875rem; margin-bottom: 0.5rem;"><strong>Impact:</strong> Dev team will build inconsistent UI</div>
+                    <div style="background: white; padding: 0.75rem; border-radius: 0.5rem; margin-top: 1rem;">
+                        <strong style="color: #ea580c;">Mitigation:</strong>
+                        <ul style="margin: 0.5rem 0 0 1rem; font-size: 0.875rem; color: #374151;">
+                            <li>Create basic design system by end of Week 1</li>
+                            <li>Use Tailwind default + custom theme as interim</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Decisions Section -->
+        <div id="section-decisions" class="content-section" style="display: none;">
+            <div style="background: linear-gradient(to right, #8b5cf6, #6366f1); color: white; border-radius: 1rem; padding: 2rem; margin-bottom: 2rem;">
+                <h1 style="font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem;">📝 Decision & Change Log</h1>
+                <p style="font-size: 1.125rem;">Track what was decided, why, and when - preserve context</p>
+            </div>
+
+            <div class="section-card" style="background: linear-gradient(to right, #fae8ff, #e0e7ff); border: 2px solid #8b5cf6;">
+                <div style="display: flex; gap: 0.75rem; align-items: center; margin-bottom: 1rem;">
+                    <span style="font-family: monospace; font-size: 0.875rem; color: #6b7280;">DEC-005</span>
+                    <span class="badge" style="background: #fee2e2; color: #991b1b;">HIGH IMPACT</span>
+                    <span style="font-size: 0.875rem; color: #6b7280;">Oct 22, 2025</span>
+                </div>
+                <h4 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 0.75rem;">
+                    Added 5 Developer-Focused Sections to Mission Control
+                </h4>
+                <div style="font-size: 0.875rem; color: #6b7280; margin-bottom: 1rem;">
+                    Category: Product • Decided by: You + Claude
+                </div>
+                
+                <div style="background: white; padding: 1rem; border-radius: 0.5rem;">
+                    <strong style="color: #8b5cf6;">Rationale:</strong>
+                    <p style="margin: 0.5rem 0 0 0; font-size: 0.875rem; color: #374151;">
+                        Dev partner needs better bridge between strategy and execution. Mission Control v4 had good strategy but lacked actionable dev tools.
+                    </p>
+                </div>
+            </div>
+
+            <div style="background: #f9fafb; padding: 1.5rem; border-radius: 0.75rem; text-align: center; color: #6b7280;">
+                <p style="margin: 0;">+ 4 more decisions fully documented</p>
+                <p style="margin: 0.5rem 0 0 0; font-size: 0.875rem;">DEC-001 through DEC-004 in React component</p>
+            </div>
+        </div>
+
+        <!-- Other Sections Placeholders -->
+        <div id="section-plan90" class="content-section" style="display: none;">
+            <div class="section-card">
+                <h2 style="font-size: 1.5rem; font-weight: 700;">📅 90-Day Action Plan</h2>
+                <p style="color: #6b7280;">Full week-by-week breakdown available in the React component</p>
+            </div>
+        </div>
+
+        <div id="section-gaps" class="content-section" style="display: none;">
+            <div class="section-card">
+                <h2 style="font-size: 1.5rem; font-weight: 700;">🔍 Gap Analysis</h2>
+                <p style="color: #6b7280;">8 critical gaps identified and documented in the React component</p>
+            </div>
+        </div>
+
+        <div id="section-features" class="content-section" style="display: none;">
+            <div class="section-card">
+                <h2 style="font-size: 1.5rem; font-weight: 700;">✨ Features & Functions</h2>
+                <p style="color: #6b7280;">Complete feature set from MVP to vision in the React component</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.style.display = 'none';
+            });
+            
+            // Remove active class from all nav items
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById('section-' + sectionId).style.display = 'block';
+            
+            // Add active class to selected nav item
+            const navItem = document.getElementById('nav-' + sectionId);
+            if (navItem) {
+                navItem.classList.add('active');
+            }
+        }
+        
+        // Show overview by default
+        showSection('overview');
+    </script>
+</body>
+</html>
