@@ -1,0 +1,106 @@
+name: Auto Release on Push
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - '**.md'
+      - '.github/**'
+      - 'docs/**'
+
+permissions:
+  contents: write
+
+jobs:
+  auto-release:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Get current version
+        id: get_version
+        run: |
+          CURRENT_VERSION=$(node -p "require('./package.json').version")
+          echo "current=$CURRENT_VERSION" >> $GITHUB_OUTPUT
+
+          # Auto-increment patch version
+          IFS='.' read -ra VERSION_PARTS <<< "$CURRENT_VERSION"
+          MAJOR="${VERSION_PARTS[0]}"
+          MINOR="${VERSION_PARTS[1]}"
+          PATCH="${VERSION_PARTS[2]}"
+          NEW_PATCH=$((PATCH + 1))
+          NEW_VERSION="$MAJOR.$MINOR.$NEW_PATCH"
+
+          echo "new=$NEW_VERSION" >> $GITHUB_OUTPUT
+          echo "📦 Auto-incrementing version: $CURRENT_VERSION → $NEW_VERSION"
+
+      - name: Update version in package.json
+        run: |
+          npm version ${{ steps.get_version.outputs.new }} --no-git-tag-version
+
+      - name: Build app
+        run: npm run electron:build
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Fix latest-mac.yml file names
+        run: |
+          cd release
+          sed -i '' 's/Hauskat-Mission-Control/Hauskat.Mission.Control/g' latest-mac.yml
+          echo "✅ Fixed latest-mac.yml"
+          cat latest-mac.yml
+
+      - name: Create Git Tag
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git tag v${{ steps.get_version.outputs.new }}
+          git push origin v${{ steps.get_version.outputs.new }}
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v${{ steps.get_version.outputs.new }}
+          name: v${{ steps.get_version.outputs.new }}
+          body: |
+            ## 🚀 Auto-Release v${{ steps.get_version.outputs.new }}
+
+            Auto-generated release from commit ${{ github.sha }}
+
+            ### Changes
+            ${{ github.event.head_commit.message }}
+
+            ---
+            🤖 This release was automatically generated on push to main
+          files: |
+            release/*.dmg
+            release/*.zip
+            release/latest-mac.yml
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-builds
+          path: |
+            release/*.dmg
+            release/*.zip
+            release/*.yml
+          retention-days: 5
