@@ -13,24 +13,15 @@ permissions:
   contents: write
 
 jobs:
-  auto-release:
-    runs-on: macos-latest
-
+  version:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.get_version.outputs.new }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          ref: main
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm ci
 
       - name: Get current version from latest git tag
         id: get_version
@@ -51,68 +42,6 @@ jobs:
           echo "new=$NEW_VERSION" >> $GITHUB_OUTPUT
           echo "📦 Auto-incrementing version from latest tag: $CURRENT_VERSION → $NEW_VERSION"
 
-      - name: Update version in package.json
-        run: |
-          npm version ${{ steps.get_version.outputs.new }} --no-git-tag-version
-
-      - name: Build app
-        run: npm run electron:build
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Verify build artifacts
-        run: |
-          echo "📦 Verifying build artifacts..."
-          ls -lh release/
-
-          # Check for required files
-          if [ ! -d "release" ]; then
-            echo "❌ Error: release directory not found!"
-            exit 1
-          fi
-
-          DMG_COUNT=$(ls release/*.dmg 2>/dev/null | wc -l)
-          ZIP_COUNT=$(ls release/*.zip 2>/dev/null | wc -l)
-
-          if [ "$DMG_COUNT" -eq 0 ]; then
-            echo "❌ Error: No .dmg files found!"
-            exit 1
-          fi
-
-          if [ "$ZIP_COUNT" -eq 0 ]; then
-            echo "❌ Error: No .zip files found!"
-            exit 1
-          fi
-
-          echo "✅ Found $DMG_COUNT .dmg file(s) and $ZIP_COUNT .zip file(s)"
-
-      - name: Fix latest-mac.yml file names
-        run: |
-          cd release
-          if [ ! -f latest-mac.yml ]; then
-            echo "❌ Error: latest-mac.yml not found!"
-            exit 1
-          fi
-          sed -i '' 's/Hauskat-Mission-Control/Hauskat.Mission.Control/g' latest-mac.yml
-          echo "✅ Fixed latest-mac.yml"
-
-          # Verify the file contains expected artifact names
-          if ! grep -q "Hauskat.Mission.Control" latest-mac.yml; then
-            echo "⚠️  Warning: latest-mac.yml may not contain expected artifact names"
-            cat latest-mac.yml
-            exit 1
-          fi
-          echo "✅ Verified latest-mac.yml contains correct artifact names"
-          cat latest-mac.yml
-
-      - name: Commit version bump
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add package.json package-lock.json
-          git commit -m "chore: bump version to ${{ steps.get_version.outputs.new }} [skip ci]"
-          git push origin main
-
       - name: Create Git Tag
         run: |
           git config user.name "github-actions[bot]"
@@ -127,36 +56,109 @@ jobs:
             echo "✅ Created and pushed tag v${{ steps.get_version.outputs.new }}"
           fi
 
+  build:
+    needs: version
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Update version in package.json
+        run: |
+          npm version ${{ needs.version.outputs.version }} --no-git-tag-version
+
+      - name: Build app (macOS)
+        if: matrix.os == 'macos-latest'
+        run: npm run package:mac
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build app (Linux)
+        if: matrix.os == 'ubuntu-latest'
+        run: npm run package
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build app (Windows)
+        if: matrix.os == 'windows-latest'
+        run: npm run electron:build -- --win
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Fix latest-mac.yml file names
+        if: matrix.os == 'macos-latest'
+        run: |
+          cd release
+          sed -i '' 's/Hauskat-Mission-Control/Hauskat.Mission.Control/g' latest-mac.yml || true
+          echo "✅ Fixed latest-mac.yml"
+          cat latest-mac.yml || echo "No latest-mac.yml found"
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-${{ matrix.os }}
+          path: |
+            release/*
+          retention-days: 5
+
+  release:
+    needs: [version, build]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Display structure of downloaded files
+        run: ls -R artifacts
+
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: v${{ steps.get_version.outputs.new }}
-          name: v${{ steps.get_version.outputs.new }}
+          tag_name: v${{ needs.version.outputs.version }}
+          name: v${{ needs.version.outputs.version }}
           body: |
-            ## 🚀 Auto-Release v${{ steps.get_version.outputs.new }}
+            ## 🚀 Auto-Release v${{ needs.version.outputs.version }}
 
             Auto-generated release from commit ${{ github.sha }}
 
             ### Changes
             ${{ github.event.head_commit.message }}
 
+            ### Downloads
+            - **macOS**: Download the `.dmg` or `.zip` file
+            - **Linux**: Download the `.AppImage`, `.deb`, or `.rpm` file
+            - **Windows**: Download the `.exe` installer or portable `.exe`
+
             ---
             🤖 This release was automatically generated on push to main
           files: |
-            release/*.dmg
-            release/*.zip
-            release/latest-mac.yml
+            artifacts/**/*.dmg
+            artifacts/**/*.zip
+            artifacts/**/*.AppImage
+            artifacts/**/*.deb
+            artifacts/**/*.rpm
+            artifacts/**/*.snap
+            artifacts/**/*.exe
+            artifacts/**/*.yml
+            artifacts/**/*.yaml
           draft: false
           prerelease: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: release-builds
-          path: |
-            release/*.dmg
-            release/*.zip
-            release/*.yml
-          retention-days: 5

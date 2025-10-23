@@ -16,7 +16,6 @@ let mainWindow;
 autoUpdater.autoDownload = false;
 autoUpdater.autoInstallOnAppQuit = true;
 autoUpdater.logger = console;
-autoUpdater.logger.transports.console.level = 'debug';
 
 // Log the feed URL being used
 console.log('=== AUTO-UPDATER CONFIGURATION ===');
