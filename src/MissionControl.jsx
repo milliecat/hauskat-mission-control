@@ -3755,17 +3755,31 @@ const DecisionLogSection = () => {
       {/* Sidebar Navigation */}
       <div className={`${sidebarOpen ? 'w-64' : 'w-16'} bg-white dark:bg-gray-800 border-r dark:border-gray-700 transition-all duration-300 overflow-y-auto`}>
         <div className="p-4">
-          <div className="flex items-center justify-between mb-6">
-            <div className={`flex items-center gap-2 ${!sidebarOpen && 'justify-center'}`}>
-              <HauskatIcon className="w-8 h-8" color="#9333ea" />
-              {sidebarOpen && <span className="font-bold text-xl dark:text-white">Hauskat</span>}
-            </div>
-            <button
-              onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="p-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded"
-            >
-              {sidebarOpen ? <X className="w-5 h-5 dark:text-gray-300" /> : <Menu className="w-5 h-5 dark:text-gray-300" />}
-            </button>
+          <div className={`flex items-center mb-6 ${sidebarOpen ? 'justify-between' : 'flex-col gap-3'}`}>
+            {sidebarOpen ? (
+              <>
+                <div className="flex items-center gap-2">
+                  <HauskatIcon className="w-8 h-8" color="#9333ea" />
+                  <span className="font-bold text-xl dark:text-white">Hauskat</span>
+                </div>
+                <button
+                  onClick={() => setSidebarOpen(!sidebarOpen)}
+                  className="p-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded"
+                >
+                  <X className="w-5 h-5 dark:text-gray-300" />
+                </button>
+              </>
+            ) : (
+              <>
+                <button
+                  onClick={() => setSidebarOpen(!sidebarOpen)}
+                  className="p-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded w-full flex justify-center"
+                >
+                  <Menu className="w-5 h-5 dark:text-gray-300" />
+                </button>
+                <HauskatIcon className="w-8 h-8" color="#9333ea" />
+              </>
+            )}
           </div>
 
           {/* Theme Toggle */}
@@ -3810,7 +3824,9 @@ const DecisionLogSection = () => {
                 <button
                   key={key}
                   onClick={() => setActiveSection(key)}
-                  className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg transition relative ${
+                  className={`w-full flex items-center gap-3 py-2 rounded-lg transition relative ${
+                    sidebarOpen ? 'px-3' : 'justify-center'
+                  } ${
                     activeSection === key
                       ? `bg-${section.color}-100 dark:bg-${section.color}-900 text-${section.color}-700 dark:text-${section.color}-300 font-medium`
                       : 'hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300'
