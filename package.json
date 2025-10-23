@@ -1,6 +1,6 @@
 {
   "name": "hauskat-mission-control",
-  "version": "4.5.3",
+  "version": "4.5.4",
   "description": "Hauskat Mission Control - Native Mac Application",
   "main": "dist-electron/main.js",
   "type": "module",
