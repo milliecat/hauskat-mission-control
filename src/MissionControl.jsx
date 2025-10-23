@@ -1800,7 +1800,7 @@ const TeamSyncSection = () => {
         <div className="space-y-2">
           <div className="flex items-center gap-3 p-3 bg-white dark:bg-gray-800 rounded-lg">
             <Star className="w-5 h-5 text-yellow-500 dark:text-yellow-400" />
-            <span className="dark:text-white">Completed comprehensive Mission Control v4 with 12 sections!</span>
+            <span className="dark:text-white">Completed comprehensive Mission Control v4.5 with enhanced features!</span>
           </div>
           {customWins.map((item) => (
             <div key={item.id} className="flex items-center gap-3 p-3 bg-white dark:bg-gray-800 rounded-lg">
