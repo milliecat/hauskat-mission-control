@@ -411,11 +411,16 @@ const HauskatMissionControlV45 = () => {
       <div className="space-y-6">
         {/* Hero Section with Real-Time Status */}
         <div className="bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl p-8">
-          <div className="flex items-center gap-4 mb-4">
-            <Cat className="w-12 h-12" />
-            <Heart className="w-8 h-8 animate-pulse" />
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center gap-4">
+              <Cat className="w-12 h-12" />
+              <Heart className="w-8 h-8 animate-pulse" />
+            </div>
+            <div className="bg-green-500 text-white px-4 py-2 rounded-full font-bold text-sm shadow-lg animate-pulse">
+              ✨ v4.5.2 - Auto-Update Test
+            </div>
           </div>
-          <h1 className="text-4xl font-bold mb-2">Hauskat Mission Control v4.5</h1>
+          <h1 className="text-4xl font-bold mb-2">Hauskat Mission Control v4.5.2</h1>
           <p className="text-xl opacity-90">The Emotional Operating System for Cat Care</p>
           <div className="mt-6 grid grid-cols-3 gap-4">
             <div className="bg-white/20 backdrop-blur rounded-lg p-3">
