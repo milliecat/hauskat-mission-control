@@ -5,6 +5,9 @@ on:
     tags:
       - 'v*.*.*'  # Triggers on version tags like v4.5.0, v4.6.0, etc.
 
+permissions:
+  contents: write  # Required to create releases
+
 jobs:
   release:
     runs-on: macos-latest
