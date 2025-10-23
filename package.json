@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "electron:dev": "concurrently \"vite\" \"wait-on http://localhost:5173 && electron .\"",
     "electron:build": "vite build && electron-builder",
-    "package": "vite build && electron-builder --mac",
+    "package": "vite build && electron-builder --linux",
+    "package:mac": "vite build && electron-builder --mac",
     "icon:help": "node generate-icon.cjs"
   },
   "keywords": [
@@ -19,7 +20,10 @@
     "hauskat",
     "mission-control"
   ],
-  "author": "Hauskat",
+  "author": {
+    "name": "Hauskat",
+    "email": "hello@hauskat.com"
+  },
   "license": "MIT",
   "dependencies": {
     "electron-store": "^8.1.0",
