@@ -200,20 +200,20 @@ const HauskatMissionControlV45 = () => {
             <Cat className="w-12 h-12" />
             <Heart className="w-8 h-8 animate-pulse" />
           </div>
-          <h1 className="text-4xl font-bold mb-2">Hauskat Mission Control v4</h1>
+          <h1 className="text-4xl font-bold mb-2">Hauskat Mission Control v4.5</h1>
           <p className="text-xl opacity-90">The Emotional Operating System for Cat Care</p>
           <div className="mt-6 grid grid-cols-3 gap-4">
             <div className="bg-white/20 backdrop-blur rounded-lg p-3">
               <div className="text-sm opacity-80">Current Phase</div>
-              <div className="font-bold text-lg">Planning → Build</div>
+              <div className="font-bold text-lg">🚀 Active Development</div>
             </div>
             <div className="bg-white/20 backdrop-blur rounded-lg p-3">
-              <div className="text-sm opacity-80">Days to Beta Launch</div>
-              <div className="font-bold text-lg">60 days</div>
+              <div className="text-sm opacity-80">Recent Focus</div>
+              <div className="font-bold text-lg">3D Cat Game + Multiplayer</div>
             </div>
             <div className="bg-white/20 backdrop-blur rounded-lg p-3">
-              <div className="text-sm opacity-80">Target Market</div>
-              <div className="font-bold text-lg">85M Pet Families</div>
+              <div className="text-sm opacity-80">Recent Commits</div>
+              <div className="font-bold text-lg">15+ on 3D features</div>
             </div>
           </div>
         </div>
@@ -275,10 +275,10 @@ const HauskatMissionControlV45 = () => {
           </div>
           <div className="space-y-3">
             {[
-              { task: 'Interview 10 cat parents for MVP validation', priority: 'HIGH', status: 'pending' },
-              { task: 'Set up Next.js + PostgreSQL dev environment', priority: 'HIGH', status: 'pending' },
-              { task: 'Design 3 core screens (Profile, Wellness, Q&A)', priority: 'MEDIUM', status: 'pending' },
-              { task: 'Create database schema for MVP', priority: 'HIGH', status: 'pending' }
+              { task: 'Continue optimizing 3D cat game performance', priority: 'HIGH', status: 'in-progress' },
+              { task: 'Enhance multiplayer zone system stability', priority: 'HIGH', status: 'in-progress' },
+              { task: 'Add more zones beyond Home and Town', priority: 'MEDIUM', status: 'pending' },
+              { task: 'Implement additional cat customization options', priority: 'MEDIUM', status: 'pending' }
             ].map((item, idx) => (
               <div key={idx} className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition">
                 <input 
@@ -307,7 +307,7 @@ const HauskatMissionControlV45 = () => {
           <h3 className="text-xl font-bold mb-4">🔗 System Integration Health</h3>
           <div className="space-y-4">
             {[
-              { layer: 'Layer 1: Identity (Profiles)', status: 80, color: 'purple' },
+              { layer: 'Layer 1: Identity (Loafi Profiles + 3D Cats)', status: 85, color: 'purple' },
               { layer: 'Layer 2: Data Generation (Wellness)', status: 60, color: 'blue' },
               { layer: 'Layer 3: Intelligence (Knowledge Hub)', status: 70, color: 'green' },
               { layer: 'Layer 4: Utility (Pet Passport)', status: 40, color: 'yellow' },
@@ -332,10 +332,10 @@ const HauskatMissionControlV45 = () => {
         {/* Success Metrics Dashboard */}
         <div className="grid grid-cols-4 gap-4">
           {[
-            { label: 'MVP Features', current: '0/12', target: '12/12', icon: Sparkles },
-            { label: 'User Interviews', current: '0/10', target: '10/10', icon: Users },
-            { label: 'Beta Signups', current: '0', target: '500', icon: TrendingUp },
-            { label: 'Days Left', current: '90', target: '0', icon: Clock }
+            { label: 'Core Features', current: '6/12', target: '12/12', icon: Sparkles },
+            { label: 'Recent Commits', current: '15+', target: 'Ongoing', icon: Activity },
+            { label: '3D Game Status', current: 'Active', target: 'Polish', icon: Gamepad2 },
+            { label: 'Tech Stack', current: 'Updated', target: 'Next 15', icon: Rocket }
           ].map((metric, idx) => (
             <div key={idx} className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-lg p-4">
               <metric.icon className="w-6 h-6 text-purple-600 mb-2" />
@@ -898,8 +898,8 @@ const HauskatMissionControlV45 = () => {
           },
           {
             decision: 'Database',
-            options: ['PostgreSQL on Railway', 'Supabase', 'PlanetScale'],
-            recommended: 'PostgreSQL on Railway',
+            options: ['Supabase', 'PostgreSQL on Railway', 'PlanetScale'],
+            recommended: 'Supabase',
             status: 'pending',
             impact: 'HIGH'
           },
@@ -1153,13 +1153,13 @@ const DevSprintsSection = () => {
       tickets: [
         {
           id: 'HK-001',
-          title: 'Set up Next.js 14 project with TypeScript',
+          title: 'Set up Next.js 15 project with TypeScript',
           priority: 'HIGH',
           estimate: '4h',
           status: 'todo',
           assignee: 'Dev Partner',
           acceptanceCriteria: [
-            'Next.js 14 installed and configured',
+            'Next.js 15 installed and configured',
             'TypeScript strict mode enabled',
             'ESLint and Prettier configured',
             'Git repository initialized'
@@ -1629,68 +1629,200 @@ const TechSpecsSection = () => {
               ))}
             </div>
           </div>
+
+          {/* Cats Table - NEW FOR 3D GAME */}
+          <div className="border-2 border-cyan-200 rounded-lg p-4">
+            <h4 className="font-bold text-lg mb-3">cats 🎮</h4>
+            <div className="bg-cyan-50 p-2 rounded mb-2 text-xs">
+              <strong>NEW:</strong> 3D cat game system - stores customizable 3D cat characters
+            </div>
+            <div className="space-y-2 text-sm font-mono">
+              <div className="grid grid-cols-3 gap-2 font-bold text-gray-700 border-b pb-2">
+                <div>Field</div>
+                <div>Type</div>
+                <div>Notes</div>
+              </div>
+              {[
+                ['id', 'UUID', 'Primary key'],
+                ['user_id', 'UUID', 'Foreign key → users.id'],
+                ['name', 'VARCHAR(100)', 'Cat character name'],
+                ['body_color', 'VARCHAR(7)', 'Hex color code'],
+                ['eye_color', 'VARCHAR(7)', 'Hex color code'],
+                ['nose_color', 'VARCHAR(7)', 'Hex color code'],
+                ['position_x', 'FLOAT', 'Last saved X position'],
+                ['position_y', 'FLOAT', 'Last saved Y position'],
+                ['position_z', 'FLOAT', 'Last saved Z position'],
+                ['created_at', 'TIMESTAMP', ''],
+                ['updated_at', 'TIMESTAMP', '']
+              ].map(([field, type, note]) => (
+                <div key={field} className="grid grid-cols-3 gap-2 text-gray-600">
+                  <div className="text-blue-600">{field}</div>
+                  <div className="text-purple-600">{type}</div>
+                  <div className="text-gray-500 text-xs">{note}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Zones Table - NEW FOR MULTIPLAYER */}
+          <div className="border-2 border-orange-200 rounded-lg p-4">
+            <h4 className="font-bold text-lg mb-3">zones 🌍</h4>
+            <div className="bg-orange-50 p-2 rounded mb-2 text-xs">
+              <strong>NEW:</strong> Multiplayer zone system - persistent spaces where players meet
+            </div>
+            <div className="space-y-2 text-sm font-mono">
+              <div className="grid grid-cols-3 gap-2 font-bold text-gray-700 border-b pb-2">
+                <div>Field</div>
+                <div>Type</div>
+                <div>Notes</div>
+              </div>
+              {[
+                ['id', 'UUID', 'Primary key'],
+                ['name', 'VARCHAR(100)', 'Zone name (Home, Town, etc.)'],
+                ['max_players', 'INTEGER', 'Capacity (1 for Home, 50 for Town)'],
+                ['description', 'TEXT', 'Zone description'],
+                ['created_at', 'TIMESTAMP', '']
+              ].map(([field, type, note]) => (
+                <div key={field} className="grid grid-cols-3 gap-2 text-gray-600">
+                  <div className="text-blue-600">{field}</div>
+                  <div className="text-purple-600">{type}</div>
+                  <div className="text-gray-500 text-xs">{note}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Player Positions Table - NEW FOR MULTIPLAYER */}
+          <div className="border-2 border-pink-200 rounded-lg p-4">
+            <h4 className="font-bold text-lg mb-3">player_positions 👥</h4>
+            <div className="bg-pink-50 p-2 rounded mb-2 text-xs">
+              <strong>NEW:</strong> Real-time player tracking - updates every 3 seconds
+            </div>
+            <div className="space-y-2 text-sm font-mono">
+              <div className="grid grid-cols-3 gap-2 font-bold text-gray-700 border-b pb-2">
+                <div>Field</div>
+                <div>Type</div>
+                <div>Notes</div>
+              </div>
+              {[
+                ['user_id', 'UUID', 'Foreign key → users.id'],
+                ['zone_id', 'UUID', 'Foreign key → zones.id'],
+                ['position_x', 'FLOAT', 'X coordinate'],
+                ['position_y', 'FLOAT', 'Y coordinate'],
+                ['position_z', 'FLOAT', 'Z coordinate'],
+                ['rotation', 'FLOAT', 'Y-axis rotation'],
+                ['is_online', 'BOOLEAN', 'Online status'],
+                ['last_seen', 'TIMESTAMP', 'Auto-update on move']
+              ].map(([field, type, note]) => (
+                <div key={field} className="grid grid-cols-3 gap-2 text-gray-600">
+                  <div className="text-blue-600">{field}</div>
+                  <div className="text-purple-600">{type}</div>
+                  <div className="text-gray-500 text-xs">{note}</div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
 
       {/* API Endpoints */}
       <div className="bg-white rounded-xl p-6">
-        <h3 className="text-2xl font-bold mb-4">🔌 API Endpoints</h3>
-        
+        <h3 className="text-2xl font-bold mb-4">🔌 API Architecture - tRPC (Type-Safe)</h3>
+
+        <div className="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-lg p-4 mb-4">
+          <p className="text-sm">
+            <strong>Architecture:</strong> Using tRPC 11.6 for end-to-end type-safety. All API calls are validated with Zod schemas.
+            Main tRPC router at <code className="bg-white px-1 rounded">/server/routers/_app.ts</code> aggregates 9 sub-routers.
+          </p>
+        </div>
+
+        <h4 className="font-semibold mb-3">📡 tRPC Routers (9 total)</h4>
         <div className="space-y-3">
-          {/* Auth Endpoints */}
+          {/* User Router */}
+          <div className="border-l-4 border-purple-500 pl-4 py-2 bg-purple-50">
+            <div className="flex items-center gap-3 mb-2">
+              <span className="text-xs font-bold px-2 py-1 bg-purple-200 text-purple-800 rounded">USER</span>
+              <code className="text-sm font-mono">server/routers/user.ts</code>
+            </div>
+            <div className="text-sm text-gray-700">
+              <strong>Procedures:</strong> getByUsername, getById, search, updateProfilePicture, getProfileLayout, saveProfileLayout, updateAboutMe, getProfileBackground, updateProfileBackground
+            </div>
+          </div>
+
+          {/* Cats Router - NEW */}
+          <div className="border-l-4 border-cyan-500 pl-4 py-2 bg-cyan-50">
+            <div className="flex items-center gap-3 mb-2">
+              <span className="text-xs font-bold px-2 py-1 bg-cyan-200 text-cyan-800 rounded">CATS 🎮</span>
+              <code className="text-sm font-mono">server/routers/cats.ts</code>
+            </div>
+            <div className="text-sm text-gray-700">
+              <strong>Procedures:</strong> get (fetch cat), create (3D cat creation), update (appearance & position saving)
+            </div>
+          </div>
+
+          {/* Zones Router - NEW */}
+          <div className="border-l-4 border-orange-500 pl-4 py-2 bg-orange-50">
+            <div className="flex items-center gap-3 mb-2">
+              <span className="text-xs font-bold px-2 py-1 bg-orange-200 text-orange-800 rounded">ZONES 🌍</span>
+              <code className="text-sm font-mono">server/routers/zones.ts</code>
+            </div>
+            <div className="text-sm text-gray-700">
+              <strong>Procedures:</strong> getZones, getPlayerPosition, updatePlayerPosition (real-time multiplayer)
+            </div>
+          </div>
+
+          {/* Friend Router */}
           <div className="border-l-4 border-green-500 pl-4 py-2">
             <div className="flex items-center gap-3 mb-2">
-              <span className="text-xs font-bold px-2 py-1 bg-green-100 text-green-700 rounded">POST</span>
-              <code className="text-sm font-mono">/api/auth/register</code>
+              <span className="text-xs font-bold px-2 py-1 bg-green-100 text-green-700 rounded">FRIEND</span>
+              <code className="text-sm font-mono">server/routers/friend.ts</code>
             </div>
             <div className="text-sm text-gray-600">
-              <strong>Body:</strong> {`{ email, password, name }`}<br/>
-              <strong>Returns:</strong> {`{ user, token }`}
+              <strong>Procedures:</strong> sendRequest, acceptRequest, rejectRequest, getFriends
             </div>
           </div>
 
-          <div className="border-l-4 border-green-500 pl-4 py-2">
-            <div className="flex items-center gap-3 mb-2">
-              <span className="text-xs font-bold px-2 py-1 bg-green-100 text-green-700 rounded">POST</span>
-              <code className="text-sm font-mono">/api/auth/login</code>
-            </div>
-            <div className="text-sm text-gray-600">
-              <strong>Body:</strong> {`{ email, password }`}<br/>
-              <strong>Returns:</strong> {`{ user, token }`}
-            </div>
-          </div>
-
-          {/* Profile Endpoints */}
-          <div className="border-l-4 border-purple-500 pl-4 py-2">
-            <div className="flex items-center gap-3 mb-2">
-              <span className="text-xs font-bold px-2 py-1 bg-green-100 text-green-700 rounded">POST</span>
-              <code className="text-sm font-mono">/api/profiles</code>
-            </div>
-            <div className="text-sm text-gray-600">
-              <strong>Body:</strong> {`{ name, bio, photo, theme_id }`}<br/>
-              <strong>Returns:</strong> {`{ profile }`}
-            </div>
-          </div>
-
-          <div className="border-l-4 border-purple-500 pl-4 py-2">
-            <div className="flex items-center gap-3 mb-2">
-              <span className="text-xs font-bold px-2 py-1 bg-blue-100 text-blue-700 rounded">GET</span>
-              <code className="text-sm font-mono">/api/profiles/:slug</code>
-            </div>
-            <div className="text-sm text-gray-600">
-              <strong>Returns:</strong> {`{ profile, wellness_logs[] }`}
-            </div>
-          </div>
-
-          {/* Wellness Endpoints */}
+          {/* Message Router */}
           <div className="border-l-4 border-blue-500 pl-4 py-2">
             <div className="flex items-center gap-3 mb-2">
-              <span className="text-xs font-bold px-2 py-1 bg-green-100 text-green-700 rounded">POST</span>
-              <code className="text-sm font-mono">/api/wellness/log</code>
+              <span className="text-xs font-bold px-2 py-1 bg-blue-100 text-blue-700 rounded">MESSAGE</span>
+              <code className="text-sm font-mono">server/routers/message.ts</code>
             </div>
             <div className="text-sm text-gray-600">
-              <strong>Body:</strong> {`{ profile_id, mood, energy_level, notes }`}<br/>
-              <strong>Returns:</strong> {`{ log }`}
+              <strong>Procedures:</strong> sendMessage, getConversation, list
+            </div>
+          </div>
+
+          {/* Post Router */}
+          <div className="border-l-4 border-pink-500 pl-4 py-2">
+            <div className="flex items-center gap-3 mb-2">
+              <span className="text-xs font-bold px-2 py-1 bg-pink-100 text-pink-700 rounded">POST</span>
+              <code className="text-sm font-mono">server/routers/post.ts</code>
+            </div>
+            <div className="text-sm text-gray-600">
+              <strong>Procedures:</strong> getAll, getById, create, delete, like
+            </div>
+          </div>
+
+          {/* GuestBook Router */}
+          <div className="border-l-4 border-indigo-500 pl-4 py-2">
+            <div className="flex items-center gap-3 mb-2">
+              <span className="text-xs font-bold px-2 py-1 bg-indigo-100 text-indigo-700 rounded">GUESTBOOK</span>
+              <code className="text-sm font-mono">server/routers/guestBook.ts</code>
+            </div>
+            <div className="text-sm text-gray-600">
+              <strong>Procedures:</strong> getByUsername, add, delete
+            </div>
+          </div>
+
+          {/* Media Router */}
+          <div className="border-l-4 border-yellow-500 pl-4 py-2">
+            <div className="flex items-center gap-3 mb-2">
+              <span className="text-xs font-bold px-2 py-1 bg-yellow-100 text-yellow-700 rounded">MEDIA</span>
+              <code className="text-sm font-mono">server/routers/media.ts</code>
+            </div>
+            <div className="text-sm text-gray-600">
+              <strong>Procedures:</strong> upload (Supabase Storage), getByUserId, delete
             </div>
           </div>
         </div>
@@ -1703,13 +1835,13 @@ const TechSpecsSection = () => {
         <div className="space-y-4">
           <div className="border rounded-lg p-4 bg-gray-50">
             <div className="flex items-center justify-between mb-2">
-              <h4 className="font-bold">ADR-001: Use Next.js 14 for Frontend</h4>
+              <h4 className="font-bold">ADR-001: Use Next.js 15 for Frontend</h4>
               <span className="text-xs text-gray-500">Oct 20, 2025</span>
             </div>
             <div className="text-sm space-y-1 text-gray-700">
               <p><strong>Status:</strong> Accepted</p>
               <p><strong>Context:</strong> Need modern React framework with SSR, API routes, and great DX</p>
-              <p><strong>Decision:</strong> Use Next.js 14 with app router</p>
+              <p><strong>Decision:</strong> Use Next.js 15 with app router, React 19, and Turbopack</p>
               <p><strong>Consequences:</strong> Fast development, excellent SEO, Vercel deployment</p>
             </div>
           </div>
@@ -1722,7 +1854,7 @@ const TechSpecsSection = () => {
             <div className="text-sm space-y-1 text-gray-700">
               <p><strong>Status:</strong> Accepted</p>
               <p><strong>Context:</strong> Need relational database for user/profile/wellness data</p>
-              <p><strong>Decision:</strong> PostgreSQL on Railway</p>
+              <p><strong>Decision:</strong> Supabase (PostgreSQL + Storage + Auth)</p>
               <p><strong>Consequences:</strong> ACID compliance, JSONB support, cost-effective</p>
             </div>
           </div>
@@ -1981,25 +2113,25 @@ const DecisionLogSection = () => {
             {
               id: 'DEC-003',
               date: 'Oct 20, 2025',
-              title: 'Next.js 14 with App Router for Frontend',
+              title: 'Next.js 15 with App Router for Frontend',
               category: 'Technical',
               decidedBy: 'Dev Partner',
               rationale: 'Need modern React framework with SSR, API routes, and excellent DX. App router provides better performance and developer experience.',
               impact: 'HIGH',
               alternatives: ['Remix', 'Vite + React Router', 'Create React App'],
-              outcome: 'Next.js 14 selected, Vercel deployment planned',
+              outcome: 'Next.js 15 with React 19 and Turbopack selected, Vercel deployment recommended',
               relatedDecisions: []
             },
             {
               id: 'DEC-002',
               date: 'Oct 20, 2025',
-              title: 'PostgreSQL on Railway for Database',
+              title: 'Supabase for Database, Storage, and Auth',
               category: 'Technical',
               decidedBy: 'You + Dev Partner',
               rationale: 'Need reliable relational database with JSONB support. Railway offers easy setup and reasonable pricing for MVP.',
               impact: 'HIGH',
               alternatives: ['Supabase', 'PlanetScale', 'AWS RDS'],
-              outcome: 'PostgreSQL on Railway, $5/mo plan',
+              outcome: 'Supabase selected - PostgreSQL, Storage, and integrated auth',
               relatedDecisions: []
             },
             {
@@ -2296,6 +2428,40 @@ const DecisionLogSection = () => {
                   </div>
                 </div>
               ))}
+            </div>
+          </div>
+
+          {/* 3D Cat Game System - NEW CORE FEATURE */}
+          <div>
+            <h4 className="font-semibold text-lg mb-3 text-cyan-600">🎮 3D Cat Game System (ACTIVE DEVELOPMENT)</h4>
+            <div className="grid grid-cols-3 gap-3">
+              {[
+                { icon: '🐱', name: '3D Cat Creator', desc: 'Geometric procedural cat customization' },
+                { icon: '🎨', name: 'Cat Customization', desc: 'Body, eye, nose colors' },
+                { icon: '🕹️', name: 'Playable Cats', desc: 'WASD + Space + Shift controls' },
+                { icon: '🎥', name: 'Third-Person Camera', desc: 'Follow camera system' },
+                { icon: '🌍', name: 'Multiplayer Zones', desc: 'Home Zone & Town Zone' },
+                { icon: '👥', name: 'Real-Time Players', desc: 'See other players in zones' },
+                { icon: '⚡', name: 'Physics Engine', desc: 'Rapier physics & collisions' },
+                { icon: '📍', name: 'Auto-Save Position', desc: 'Position saved every 3 seconds' },
+                { icon: '🏃', name: 'Movement System', desc: 'Walking, running, jumping' }
+              ].map(feature => (
+                <div key={feature.name} className="border-2 border-cyan-200 rounded-lg p-3 hover:bg-cyan-50 transition">
+                  <div className="flex items-start gap-3">
+                    <div className="text-2xl">{feature.icon}</div>
+                    <div className="flex-1">
+                      <div className="font-medium text-sm">{feature.name}</div>
+                      <div className="text-xs text-gray-600 mt-1">{feature.desc}</div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="mt-3 bg-gradient-to-r from-cyan-50 to-blue-50 rounded-lg p-3">
+              <p className="text-sm text-gray-700">
+                <strong>Status:</strong> Recently implemented with 15+ commits focused on optimization, zone system, and multiplayer support.
+                Core mechanics include procedural 3D cat generation, physics-based movement, real-time position tracking, and zone-based multiplayer gameplay.
+              </p>
             </div>
           </div>
 
@@ -2895,40 +3061,44 @@ const DecisionLogSection = () => {
             <div className="space-y-2 text-sm">
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 bg-indigo-400 rounded-full" />
-                <span>Next.js 14 + TypeScript</span>
+                <span>Next.js 15 + React 19 + TypeScript 5</span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 bg-indigo-400 rounded-full" />
-                <span>Tailwind CSS + Framer</span>
+                <span>Tailwind CSS 4 + Turbopack</span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 bg-indigo-400 rounded-full" />
-                <span>React Query + Zustand</span>
+                <span>React Three Fiber 9.4 + Three.js 0.180</span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 bg-indigo-400 rounded-full" />
-                <span>Socket.io (real-time)</span>
+                <span>@react-three/rapier (physics engine)</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-indigo-400 rounded-full" />
+                <span>React Query + tRPC 11.6</span>
               </div>
             </div>
           </div>
           <div className="border-2 border-purple-200 rounded-lg p-4">
-            <h5 className="font-semibold text-purple-700 mb-3">Backend</h5>
+            <h5 className="font-semibold text-purple-700 mb-3">Backend & API</h5>
             <div className="space-y-2 text-sm">
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 bg-purple-400 rounded-full" />
-                <span>Node.js + Express</span>
+                <span>tRPC 11.6 (type-safe APIs)</span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 bg-purple-400 rounded-full" />
-                <span>PostgreSQL + Redis</span>
+                <span>NextAuth.js 4.24.11 (JWT)</span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 bg-purple-400 rounded-full" />
-                <span>Neo4j (knowledge graph)</span>
+                <span>Supabase (PostgreSQL)</span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 bg-purple-400 rounded-full" />
-                <span>Elasticsearch</span>
+                <span>9 tRPC routers (cats, zones, user, friend, etc.)</span>
               </div>
             </div>
           </div>
@@ -2937,19 +3107,19 @@ const DecisionLogSection = () => {
             <div className="space-y-2 text-sm">
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 bg-pink-400 rounded-full" />
-                <span>AWS (multi-region)</span>
+                <span>Vercel (recommended deployment)</span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 bg-pink-400 rounded-full" />
-                <span>CloudFlare CDN</span>
+                <span>Supabase Storage (images)</span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 bg-pink-400 rounded-full" />
-                <span>S3 + CloudFront</span>
+                <span>Vite 5 (dev tooling)</span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="w-2 h-2 bg-pink-400 rounded-full" />
-                <span>Docker + K8s</span>
+                <span>npm package manager</span>
               </div>
             </div>
           </div>
