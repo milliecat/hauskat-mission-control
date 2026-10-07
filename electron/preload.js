@@ -1,9 +1,9 @@
 // Preload script for Electron
 // This file runs before the web page loads and has access to both DOM APIs and Node.js
-import { ipcRenderer } from 'electron';
+import { contextBridge, ipcRenderer } from 'electron';
 
 // Expose project monitoring APIs to renderer
-window.projectMonitor = {
+contextBridge.exposeInMainWorld('projectMonitor', {
   onUpdate: (callback) => {
     ipcRenderer.on('project-update', (event, data) => callback(data));
   },
@@ -14,7 +14,7 @@ window.projectMonitor = {
   setProjectPath: (path) => ipcRenderer.invoke('set-project-path', path),
   refreshData: () => ipcRenderer.invoke('refresh-project-data'),
   updateTasks: (tasks) => ipcRenderer.invoke('update-tasks', tasks),
-};
+});
 
 window.addEventListener('DOMContentLoaded', () => {
   console.log('Hauskat Mission Control - Electron Preload Script Loaded');

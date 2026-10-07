@@ -1,13 +1,14 @@
-import { app, BrowserWindow, Menu, dialog, ipcMain } from 'electron';
+import { app, BrowserWindow, Menu, dialog, ipcMain, shell } from 'electron';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import { homedir } from 'os';
 import Store from 'electron-store';
-import { autoUpdater } from 'electron-updater';
+import updater from 'electron-updater';
 import { ProjectMonitor } from './projectMonitor.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+const { autoUpdater } = updater;
 
 // Enable hardware acceleration and WebGL on Linux
 app.commandLine.appendSwitch('enable-gpu-rasterization');
@@ -17,7 +18,6 @@ app.commandLine.appendSwitch('enable-webgl');
 app.commandLine.appendSwitch('enable-accelerated-2d-canvas');
 app.commandLine.appendSwitch('enable-features', 'VaapiVideoDecoder');
 app.commandLine.appendSwitch('use-gl', 'desktop');
-app.commandLine.appendSwitch('disable-gpu-sandbox');
 
 // Initialize electron-store for persistent data
 const store = new Store();
@@ -135,9 +135,10 @@ function createWindow() {
     minHeight: 600,
     backgroundColor: '#1a1a2e',
     webPreferences: {
-      preload: join(__dirname, 'preload.js'),
-      nodeIntegration: true,
-      contextIsolation: false,
+      preload: join(__dirname, 'preload.cjs'),
+      nodeIntegration: false,
+      contextIsolation: true,
+      sandbox: true,
       webgl: true,
       acceleratedGraphics: true,
     },
@@ -145,12 +146,16 @@ function createWindow() {
   });
 
   // Load the app
-  if (process.env.NODE_ENV === 'development' || !app.isPackaged) {
-    mainWindow.loadURL('http://localhost:5173');
+  if (process.env.VITE_DEV_SERVER_URL) {
+    mainWindow.loadURL(process.env.VITE_DEV_SERVER_URL);
     mainWindow.webContents.openDevTools();
   } else {
     mainWindow.loadFile(join(__dirname, '../dist/index.html'));
   }
+
+  // The dashboard never needs to navigate its privileged window to other pages.
+  mainWindow.webContents.on('will-navigate', event => event.preventDefault());
+  mainWindow.webContents.setWindowOpenHandler(() => ({ action: 'deny' }));
 
   // Set up Mac menu
   const template = [

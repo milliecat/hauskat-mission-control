@@ -1,28 +1,37 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import electron from 'vite-plugin-electron';
-import renderer from 'vite-plugin-electron-renderer';
 import { resolve } from 'path';
 
 export default defineConfig({
+  base: './',
   plugins: [
     react(),
     electron([
       {
         entry: 'electron/main.js',
+        vite: {
+          build: {
+            rolldownOptions: { external: ['electron-store', 'electron-updater', 'chokidar'] },
+          },
+        },
       },
       {
         entry: 'electron/preload.js',
+        vite: {
+          build: {
+            lib: { formats: ['cjs'], fileName: () => 'preload.cjs' },
+          },
+        },
         onstart(options) {
           options.reload();
         },
       },
     ]),
-    renderer(),
   ],
   resolve: {
     alias: {
-      '@': resolve(__dirname, './src'),
+      '@': resolve(import.meta.dirname, './src'),
     },
   },
   server: {
